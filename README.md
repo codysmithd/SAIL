@@ -1,4 +1,4 @@
 SAIL
 ====
 
-Super Awesome Intelligent Linguist-computer: Conversational AI
+Super Awesome Intelligent Linguistic-computer: Conversational AI
