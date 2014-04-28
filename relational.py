@@ -1,6 +1,3 @@
-# Relational Node-based verb-noun graph
-# Class used for creating, saving, modifying, and using graph of noun-verb probabilities
-
 '''
 File Format:
 <SOURCE_WORD>
@@ -45,7 +42,7 @@ class node:
 # Class that contains a list of nodes that link to each other with weights
 class relational_map:
 
-	def __init__(self):
+    def __init__(self):
         self.node_list = {}
 
     def load_from_file(self, filename):
