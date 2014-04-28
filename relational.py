@@ -1,68 +1,66 @@
 # Relational Node-based verb-noun graph
 # Class used for creating, saving, modifying, and using graph of noun-verb probabilities
 
-class relational:
-	
-	# Read State Constants
-	SOURCE_WORD = 0
-	NOUN_LIST = 1
-	VERB_LIST = 2
+'''
+File Format:
+<SOURCE_WORD>
+<NODE> <COUNT> ...
+'''
 
-	# Intialization method. Optionally takes filename to create from file
-	def __init__(self, filename):
-    	
-    	self.filename = filename
+# Class that contains a Word, Part Of Speech (POS), and of hash table of weighted sums to other words
+class node:
+    def __init__(self, word = "", pos = "", links = {}):
+        self.word = word.lower()
+        self.pos = pos.lower()
+        self.links = links
 
-    	self.nodeList = {} # Main node list
+    def __nonzero__(self):
+        return self.word and self.pos 
 
-    	f = open(filename, 'w')
+    def link(self, node, weight = 1):
+        if(node.word in self.links):
+            self.links[node.word] += 1
+        else:
+            self.links[node] = weight
 
-    	if(f):
+    def print_out(self):
+        buffer = "" + self.word + ' ' + self.pos + '\n'
+        for key in self.links:
+            buffer += key + ' ' + self.links + ' '
+        buffer += '\n'
+        return buffer
 
-    		read_state = SOURCE_WORD   # Current read-state
-    		is_word = False            # Is the current item suppost to be a number
+    def read_in(self, string):
+        lines = string.splitlines()
+        self.word = lines[0].split()[0]
+        self.pos = lines[0].split()[1]
 
-    		# For each line in the file
-    		for line in f:
-    			
-    			if( read_state == SOURCE_WORD ):
-    				
-    				word = line.strip()
+        word = ""
+        weight = 0
+        links = lines[1].split()
+        for x in xrange(0, len(links), 2)
+            self.link(links[x],links[x+1])
 
-    				# Initialize list of list ([0] is noun, [1] is verb)
-    				self.nodeList[word] = []
-    				self.nodeList[word].append([])
-    				self.nodeList[word].append([])
-    				
-    				read_state = NOUN_LIST
 
-    			elif( read_state == NOUN_LIST ):
-    				for word in line.split():
-    					if(is_word):
-    						self.nodeList[word][0].append(word)
-    					else:
-    						self.nodeList[word][0].append(int(word))
-    					is_word = not is_word
-    			
-    			elif( read_state == VERB_LIST ):
-    				for word in line.split():
-    					if(is_word):
-    						self.nodeList[word][1].append(word)
-    					else:
-    						self.nodeList[word][1].append(int(word))
-    					is_word = not is_word
-    		f.close()
+# Class that contains a list of nodes that link to each other with weights
+class relational_map:
 
-    # Relates the lists of nouns and verbs to each other
-    def addRelation(nouns, verbs):
+	def __init__(self):
+        self.node_list = {}
 
-    # Returns a list of assosiated words to input as a tuple with the weight
-    def getWords(input_word):
+    def load_from_file(self, filename):
+        f = open(filename, 'r')
+        if(f):
+            lines = f.readlines()
+            for x in xrange(0,len(lines),2):
+                new_node = node()
+                new_node.read_in(lines[x] + lines[x+1])
+                node_list[new_node.word] = new_node
+            f.close()
 
-    # Saves the relational to a text file
-    def save(new_filename):
-    	if(new_filename):
-    		f = open(new_filename,'r')
-    	else:
-    		f = open(.filename)
-
+    def output_file(self, filename):
+        f = open(filename, 'w')
+        if(f):
+            for key in self.node_list:
+                f.write(self.node_list[key].print_out())
+            f.close()
