@@ -1,24 +1,65 @@
 
-import pickle
-
+import json # json, I choose you
 from nltk.corpus import brown
-from nltk.probability import LidstoneProbDist
-from nltk.model.ngram import NgramModel
 
-print "building model..."
+remove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "(", ")"]
+fullstop = ["?", ";"]
 
-estimator = lambda fdist, bins: LidstoneProbDist(fdist, 0.2)
-model = NgramModel(2, brown.words(), True, False, estimator)
+print str(len(brown.sents()))
 
-print "model built..."
+words = brown.words()
+print "total words: " + str(len(words))
+
+# ditch all punctuation except periods
+words = [x for x in words if x not in remove]
+
+# convert other punctuation to periods
+words = ["." if word in fullstop else word for word in words]
+
+print "without punctuation: " + str(len(words))
 
 
-print "pickling..."
 
-# dump the model
-f = open("ngram_model.p", 'w')
-pickle.dump(model, f)
+# split into sentences
+
+sentences = []
+current = []
+
+for word in words:
+	if word == ".":
+		sentences.append(current)
+		current = []
+	else:
+		current.append(word.lower())
+
+print "sentences: " + str(len(sentences))
+
+print sentences[0]
+
+
+
+'''
+
+ngram = set()
+prevWord = None
+
+for word in words:
+
+
+	prevWord = word
+'''
+
+
+
+print "building JSON..."
+
+# dump it
+f = open("ngram_model.json", 'w')
+json.dump(sentences, f)
 f.close()
 
-print "enjoy your pickle"
-raw_input() # freeze screen when done
+print "DONE!"
+
+
+
+raw_input()
