@@ -16,26 +16,27 @@ Main loop
 '''
 
 running = True
+exit_words = ["done", "exit", "quit"]
 
 while running:
 	user_input = raw_input(">>> ").lower()
 
-	if user_input == "done" or user_input == "exit":
+	if user_input in exit_words:
 		running = False
+	else:
 
-	# tokenize
-	tokens = nltk.word_tokenize(user_input)
-	print "tokens: " + tokens
+		# tokenize
+		tokens = nltk.word_tokenize(user_input)
 
-	# filter for nouns and verbs
-	#tagged_tokens = nltk.pos_tag(tokens)
-	#print "tagged_tokens: " + tagged_tokens
+		# filter for nouns and verbs
+		tagged_tokens = nltk.pos_tag(tokens)
+		print tagged_tokens
 
-	# retreive relational words / update relations
+		# retreive relational words / update relations
 
-	# assemble sentence
+		# assemble sentence
 
-	# it all looks so easy when it's outlined like that ^
+		# it all looks so easy when it's outlined like that ^
 
-	print "\nGo away\n"
+		print "\nGo away\n"
 	

@@ -6,6 +6,8 @@ Super Awesome Intelligent Linguistic-computer: Conversational AI. This is a proj
 Dependancies
 ---
 [NLTK](http://www.nltk.org/index.html)
+* brown
+* maxent_treebank_pos_tagger
 
 How to use
 ---
