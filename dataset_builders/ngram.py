@@ -2,10 +2,14 @@
 import json # json, I choose you
 from nltk.corpus import brown
 
+
+
+'''
+Preprocess tokens
+'''
+
 remove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "(", ")"]
 fullstop = ["?", ";"]
-
-print str(len(brown.sents()))
 
 words = brown.words()
 print "total words: " + str(len(words))
@@ -34,32 +38,46 @@ for word in words:
 
 print "sentences: " + str(len(sentences))
 
-print sentences[0]
+
+
 
 
 
 '''
+Build model
+'''
 
-ngram = set()
+print "building model..."
+
+backward_ngram = dict()
 prevWord = None
 
-for word in words:
+for sentence in sentences:
+	for word in sentence:
 
+		if not backward_ngram.has_key(word):
+			backward_ngram[word] = dict()
 
-	prevWord = word
-'''
+		if prevWord == None:
+			prevWord = "<s>"
+
+		if not backward_ngram[word].has_key(prevWord):
+			backward_ngram[word][prevWord] = 0
+
+		backward_ngram[word][prevWord] += 1
+
+		prevWord = word
 
 
 
 print "building JSON..."
 
 # dump it
-f = open("ngram_model.json", 'w')
-json.dump(sentences, f)
+f = open("ngram_model_backward.json", 'w')
+json.dump(backward_ngram, f)
 f.close()
 
 print "DONE!"
-
 
 
 raw_input()

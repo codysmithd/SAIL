@@ -3,6 +3,8 @@
 Setup
 '''
 
+import nltk
+
 # init relational
 # init contextual_relational
 # init assembler
@@ -22,8 +24,12 @@ while running:
 		running = False
 
 	# tokenize
+	tokens = nltk.word_tokenize(user_input)
+	print "tokens: " + tokens
 
 	# filter for nouns and verbs
+	#tagged_tokens = nltk.pos_tag(tokens)
+	#print "tagged_tokens: " + tagged_tokens
 
 	# retreive relational words / update relations
 
