@@ -3,48 +3,25 @@ This file builds the JSON ngram files.
 '''
 
 
-import json # json, I choose you
+import json
 import nltk
 
 
 
 '''
-Preprocess tokens
+Load corpus
 '''
 
-remove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "(", ")"]
-fullstop = ["?", ";"]
+print "loading JSON corpus..."
 
-words = nltk.corpus.brown.words()
-print "total words: " + str(len(words))
-
-# ditch some punctuation
-words = [x for x in words if x not in remove]
-
-# convert other punctuation to periods
-words = ["." if word in fullstop else word for word in words]
-
-print "without punctuation: " + str(len(words))
-
-
-
-'''
-split into sentences
-'''
-
-
-sentences = []
-current = []
-
-for word in words:
-	if word == ".":
-		sentences.append(current)
-		current = []
-	else:
-		current.append(word.lower())
-
-total_sents = len(sentences)
-print "sentences: " + str(total_sents)
+# load the tagged corpus
+f = open("tagged_corpus.json", 'r')
+if(f):
+	sentences = json.load(f)
+else:
+	print "no corpus file"
+	raw_input() # hold for user
+f.close()
 
 
 
@@ -59,21 +36,12 @@ print "building backward model..."
 backward_ngram = dict()
 prevWord = None
 
-counter = 0
-
 for sentence in sentences:
 
-	#because it takes so long
-	counter += 1
-	if counter % 50 == 0:
-		print str(counter) + " of " + str(total_sents)
+	for word in sentence:
 
-	#tag the parts of speech
-	parts_of_speech = nltk.pos_tag(sentence)
-
-	for index, word in enumerate(sentence):
-
-		pos = parts_of_speech[index][1]
+		pos = word[1]
+		word = word[0]
 
 		if prevWord == None:
 			prevWord = "<s>"
@@ -103,7 +71,6 @@ f.close()
 
 
 
-
 '''
 Build forward model
 '''
@@ -120,19 +87,27 @@ for sentence in sentences:
 
 	for word in reversedSent:
 
-		if not forward_ngram.has_key(word):
-			forward_ngram[word] = dict()
+		pos = word[1]
+		word = word[0]
 
 		if prevWord == None:
 			prevWord = "</s>"
 
-		if not forward_ngram[word].has_key(prevWord):
-			forward_ngram[word][prevWord] = 0
+		if not forward_ngram.has_key(word):
+			forward_ngram[word] = dict()
 
-		forward_ngram[word][prevWord] += 1
+		if not forward_ngram[word].has_key(prevWord):
+			forward_ngram[word][prevWord] = [0, []]
+
+		forward_ngram[word][prevWord][0] += 1
+
+		if pos not in forward_ngram[word][prevWord][1]:
+			forward_ngram[word][prevWord][1].append(pos)
 
 		prevWord = word
 
+
+print forward_ngram["can"]
 
 
 print "building JSON..."
