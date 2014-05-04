@@ -2,6 +2,7 @@
 
 import json
 
+
 '''
 load the corpus
 '''
@@ -34,6 +35,8 @@ for sentence in sentences:
 	t = tuple(l)
 	if t not in structures:
 		structures.append(t)
+	else:
+		print "repeat"
 
 
 

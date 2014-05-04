@@ -13,18 +13,15 @@ class sentence_assembler:
 		f.close()
 
 		print "2 of 2"
-		
+		'''
 		f = open("datasets/ngram_forward.json", 'r')
 		self.ngram_forward = json.load(f)
 		f.close()
+		'''
 		
 
 	# make sentence using the supplied nouns and verbs
 	def run(self, tagged_tokens):
-
-		print self.getNextWords("the")
-
-
 		words = []
 		for token in tagged_tokens:
 			words.append(token[0])
@@ -35,19 +32,22 @@ class sentence_assembler:
 
 	def rateSentence(self, words):
 		rating = 0
-		prevWord = "<s>"
-		for word in words:
-			if self.ngram_backward.has_key(word):
-				if self.ngram_backward[word].has_key(prevWord):
-					rating += self.ngram_backward[word][prevWord][0]
-				else:
-					rating -= 1
-			else:
-				rating -= 1
+		prev1 = "<s>"
+		prev2 = "<s>"
 
-			prevWord = word
+		# backward ngrams
+		for index, word in enumerate(words):
 
-		return rating / len(words)
+			if index >= 1:
+				if self.ngram_backward.has_key(word):
+					if self.ngram_backward[word].has_key(prev1):
+						if self.ngram_backward[word][prev1].has_key(prev2):
+							rating += self.ngram_backward[word][prev1][prev2][0]
+			
+			prev2 = prev1
+			prev1 = word
+
+		return rating
 
 
 
