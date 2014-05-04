@@ -5,15 +5,28 @@ Setup
 
 import nltk
 
+
+
 # init relational
+'''
+from relational import relational_map
+relational = relational_map()
+'''
+
 # init contextual_relational
+
+
 # init assembler
+from sentence_assembler import sentence_assembler
+assembler = sentence_assembler()
 
 
 
 '''
 Main loop
 '''
+
+print "ready"
 
 running = True
 exit_words = ["done", "exit", "quit"]

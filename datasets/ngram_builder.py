@@ -1,6 +1,10 @@
+'''
+This file builds the JSON ngram files.
+'''
+
 
 import json # json, I choose you
-from nltk.corpus import brown
+import nltk
 
 
 
@@ -11,7 +15,7 @@ Preprocess tokens
 remove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "(", ")"]
 fullstop = ["?", ";"]
 
-words = brown.words()
+words = nltk.corpus.brown.words()
 print "total words: " + str(len(words))
 
 # ditch some punctuation
@@ -39,7 +43,8 @@ for word in words:
 	else:
 		current.append(word.lower())
 
-print "sentences: " + str(len(sentences))
+total_sents = len(sentences)
+print "sentences: " + str(total_sents)
 
 
 
@@ -54,19 +59,35 @@ print "building backward model..."
 backward_ngram = dict()
 prevWord = None
 
-for sentence in sentences:
-	for word in sentence:
+counter = 0
 
-		if not backward_ngram.has_key(word):
-			backward_ngram[word] = dict()
+for sentence in sentences:
+
+	#because it takes so long
+	counter += 1
+	if counter % 50 == 0:
+		print str(counter) + " of " + str(total_sents)
+
+	#tag the parts of speech
+	parts_of_speech = nltk.pos_tag(sentence)
+
+	for index, word in enumerate(sentence):
+
+		pos = parts_of_speech[index][1]
 
 		if prevWord == None:
 			prevWord = "<s>"
 
-		if not backward_ngram[word].has_key(prevWord):
-			backward_ngram[word][prevWord] = 0
+		if not backward_ngram.has_key(word):
+			backward_ngram[word] = dict()
 
-		backward_ngram[word][prevWord] += 1
+		if not backward_ngram[word].has_key(prevWord):
+			backward_ngram[word][prevWord] = [0, []]
+
+		backward_ngram[word][prevWord][0] += 1
+
+		if pos not in backward_ngram[word][prevWord][1]:
+			backward_ngram[word][prevWord][1].append(pos)
 
 		prevWord = word
 
@@ -74,7 +95,7 @@ for sentence in sentences:
 print "building JSON..."
 
 # dump it
-f = open("ngram_model_backward.json", 'w')
+f = open("ngram_backward.json", 'w')
 json.dump(backward_ngram, f)
 f.close()
 
@@ -117,7 +138,7 @@ for sentence in sentences:
 print "building JSON..."
 
 # dump it
-f = open("ngram_model_forward.json", 'w')
+f = open("ngram_forward.json", 'w')
 json.dump(forward_ngram, f)
 f.close()
 
