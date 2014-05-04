@@ -91,21 +91,37 @@ class relational_map:
                 f.write(self.node_hash[key].print_out())
             f.close()
 
-    # Links the words. Words is a list of strings, formatted ["<word> <part_of_speech>", ... ]
-    def link_words(self, words):
+    # Links the words. Words is a list of tuples, formatted [(<word>,<part_of_speech>), ... ]
+    # TODO
+    def link_words(self, words_tuple):
         
-        [x.lower() for x in words]
+        # convert words_tuple in words (where words[n] = "<word> <part_of_speech>")
+        words = []
+        for word_tuple in words_tuple:
+            words.append(word_tuple[0] + " " + word_tuple[1])
 
-        # Fix nodes not in node_hash
-        for word in words:
-            if(not word in self.node_hash):
-                new_node = node(word.split()[0], word.split()[1])
-                node_hash[word] = new_node
+        # Fix (add) nodes not in node_hash
+        for word_index in words:
+            if(not word_index in self.node_hash):
+                w = word_index.split()
+                new_node = node(w[0], w[1])
+                self.node_hash[word_index] = new_node
 
         # Link every word to every other word
         for x in xrange(len(words)):
-            for y in words[0:x]:
-                new_node
 
+            # word_index before
+            for word in words[0:x]:
+                self.node_hash[words[x]].link(self.node_hash[word])
+
+            # words after
+            for word in words[x+1:]:
+                self.node_hash[words[x]].link(self.node_hash[word])
+
+    # Returns a list of the top links given a word_tuple (<word>, <part_of_speech>), as a list of tuples [(word, pos), ...]
+    def get_top_links_for_word(self, word_tuple, n, pos = ""):
+        # make "<word> <part_of_speech>" for indexing hash
+        word_index = word_tuple[0] + " " + word_tuple[1];
+        return self.node_hash[word_index].get_top_links(n,pos)
 
 
