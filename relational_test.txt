@@ -1,0 +1,9 @@
+cow 1
+king_1 1 car_1 1 
+
+king 1
+cow_1 1 car_1 1 
+
+car 1
+cow_1 1 king_1 1 
+
