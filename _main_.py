@@ -3,6 +3,7 @@
 Setup
 '''
 
+import os
 import nltk
 
 
@@ -26,7 +27,8 @@ assembler = sentence_assembler()
 Main loop
 '''
 
-print "ready"
+# clear the screen of load text
+os.system(['clear','cls'][os.name == 'nt'])
 
 running = True
 exit_words = ["done", "exit", "quit"]
