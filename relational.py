@@ -24,7 +24,7 @@ class node:
         else:
             self.links[hash_index] = weight
 
-    # Returns a list of size n of the top links in-order, optionally given a Part Of Speech
+    # Returns a list of size n of the top links in-order, optionally given a Part Of Speech (POS)
     def get_top_links(self, n, pos = ""):
         top_links = []
         for key in self.links:
@@ -70,7 +70,7 @@ class node:
 class relational_map:
 
     def __init__(self):
-        self.node_hash = {}
+        self.node_hash = {} # Note: Keys are given as "<word> <part_of_speech>""
 
     # Loads in a relational map from text file
     def load_from_file(self, filename):
@@ -80,7 +80,7 @@ class relational_map:
             for x in xrange(0,len(lines),2):
                 new_node = node()
                 new_node.read_in(lines[x] + lines[x+1])
-                node_hash[new_node.word] = new_node
+                node_hash[new_node.word + new_node.pos] = new_node
             f.close()
 
     # Outputs the relational map to a file with the given filename as text
@@ -91,9 +91,21 @@ class relational_map:
                 f.write(self.node_hash[key].print_out())
             f.close()
 
-    # Links the words. Words is a list of strings, formatted "<word> <part_of_speech>"
+    # Links the words. Words is a list of strings, formatted ["<word> <part_of_speech>", ... ]
     def link_words(self, words):
+        
+        [x.lower() for x in words]
+
+        # Fix nodes not in node_hash
         for word in words:
             if(not word in self.node_hash):
-                pass
+                new_node = node(word.split()[0], word.split()[1])
+                node_hash[word] = new_node
+
+        # Link every word to every other word
+        for x in xrange(len(words)):
+            for y in words[0:x]:
+                new_node
+
+
 
