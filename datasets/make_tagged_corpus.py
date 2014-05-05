@@ -18,6 +18,8 @@ remove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "(", ")"]
 fullstop = ["?", ";"]
 
 words = nltk.corpus.brown.words()
+words += nltk.corpus.nps_chat.words()
+
 print "total words: " + str(len(words))
 
 # ditch some punctuation
@@ -93,3 +95,5 @@ json.dump(parts, f)
 f.close()
 
 print "DONE!"
+
+raw_input()

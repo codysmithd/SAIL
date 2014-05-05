@@ -5,20 +5,27 @@ import json
 
 ngram_backward = None
 ngram_forward = None
+parts_of_speech = None
 
 
 def load():
 	global ngram_backward
 	global ngram_forward
+	global parts_of_speech
 
-	print "1 of 2"
+	print "1 of 3"
 	f = open("datasets/ngram_backward.json", 'r')
 	ngram_backward = json.load(f)
 	f.close()
 
-	print "2 of 2"
+	print "2 of 3"
 	f = open("datasets/ngram_forward.json", 'r')
 	ngram_forward = json.load(f)
+	f.close()
+
+	print "3 of 3"
+	f = open("datasets/pos_tags.json", 'r')
+	parts_of_speech = json.load(f)
 	f.close()
 
 

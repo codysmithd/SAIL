@@ -4,10 +4,10 @@ This file builds the JSON ngram files.
 
 
 #locks to prevent accidental execution
-'''
+
 import json
 import nltk
-'''
+
 
 '''
 Load corpus
