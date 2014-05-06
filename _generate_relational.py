@@ -9,14 +9,14 @@ f.close()
 # Make new relational map
 long_term = relational_map()
 
-#n = 0
+n = 0
 
 for sentence in sentences:
-	#words_pos = []
-	for tuples in sentences:
-		print str(tuples[1]) + '\n'
-		#words_pos.append( (tuples[0],str(tuples[1])) )
-	#long_term.link_words(words_pos)
-	#print("\nSentence " + str(n) + " done\n")
-	#n += 1
+	words_pos = []
+	for tuples in sentence:
+		words_pos.append( (tuples[0],str(tuples[1])) )
+	long_term.link_words(words_pos)
+	print("\nSentence " + str(n) + " done\n")
+	n += 1
+
 long_term.output_file("output.txt")
