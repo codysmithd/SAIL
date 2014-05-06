@@ -33,8 +33,9 @@ for sentence in sentences:
 	for word in sentence:
 		l.append(word[1])
 	t = tuple(l)
-	if t not in structures:
-		structures.append(t)
+	if len(t) <= 8:
+		if t not in structures:
+			structures.append(t)
 
 print "building JSON..."
 
@@ -43,6 +44,7 @@ f = open("corpus_structures.json", 'w')
 json.dump(structures, f)
 f.close()
 
+print str(len(structures))
 
 print "DONE!"
 

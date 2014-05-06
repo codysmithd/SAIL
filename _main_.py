@@ -5,12 +5,13 @@ Setup
 
 import os
 import nltk
+import ngram
 
 
 
 # init assembler
-from sentence_assembler import sentence_assembler
-assembler = sentence_assembler()
+#from sentence_assembler import sentence_assembler
+#assembler = sentence_assembler()
 
 
 
@@ -45,8 +46,11 @@ while running:
 		# filter for nouns and verbs
 		tagged_tokens = nltk.pos_tag(tokens)
 
+		#convert pos to IDs
+		tagged_tokens = ngram.convertPos(tagged_tokens)
+
 		# assemble sentence
-		print assembler.run(tagged_tokens)
+		#print assembler.run(tagged_tokens)
 
 
 clearConsole()
