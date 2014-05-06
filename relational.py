@@ -1,5 +1,3 @@
-import pickle
-
 '''
 File Format:
 <SOURCE_WORD>
@@ -27,7 +25,7 @@ class node:
 
         if(hash_index != self.hash_index):
             if(hash_index in self.links):
-                self.links[hash_index] += 1
+                self.links[hash_index] += weight
             else:
                 self.links[hash_index] = weight
 
