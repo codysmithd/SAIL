@@ -87,7 +87,6 @@ class relational_map:
             f.close()
 
     # Links the words. Words is a list of tuples, formatted [(<word>,<part_of_speech>), ... ]
-    # TODO
     def link_words(self, words_tuple):
         
         # convert words_tuple in words (where words[n] = "<word> <part_of_speech>")
@@ -130,5 +129,3 @@ class relational_map:
             return self.node_hash[word_index].get_top_links(n,pos)
         else:
             raise Exception("Word tuple: " + str(word_tuple) + " not in network")
-
-
