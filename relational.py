@@ -1,3 +1,5 @@
+import pickle
+
 '''
 File Format:
 <SOURCE_WORD>
@@ -12,6 +14,7 @@ class node:
         self.word = word.lower()
         self.pos = pos.lower()
         self.links = {}
+        self.hash_index = self.word + " " + self.pos
 
     # Returns true if node is not null (empty)
     def __nonzero__(self):
@@ -19,33 +22,23 @@ class node:
 
     # Either adds weight to existing link or makes a new link
     def link(self, node_word, node_pos, weight = 1):
+
         hash_index = node_word + " " + node_pos
 
-        if(hash_index in self.links):
-            self.links[hash_index] += 1
-        else:
-            self.links[hash_index] = weight
+        if(hash_index != self.hash_index):
+            if(hash_index in self.links):
+                self.links[hash_index] += 1
+            else:
+                self.links[hash_index] = weight
 
     # Returns a list of size n of the top links in-order, optionally given a Part Of Speech (POS)
     def get_top_links(self, n, pos = ""):
         top_links = []
         for key in self.links:
             if(key.split()[1] == pos or pos == ""):
-                word = key.split()[0]
-                value = self.links[key]
-                if(len(top_links) > 1):
-                    for x in xrange(0,len(top_links)):
-                        if(value < top_links[x][1]):
-                            top_links.insert(x,(word,value))
-                else:
-                    top_links.append( (word,value) )
-        final_list = []
-        for x in xrange(0,len(top_links)):
-            if x < n:
-                final_list.append(top_links[x][0])
-            else:
-                break
-        return final_list
+                top_links.append( (key.split()[0], self.links[key]) )
+        top_links.sort(key=lambda tup: tup[1], reverse=True) 
+        return [ value[0] for value in top_links[:n] ]
 
     # Returns a string formatted for output
     def print_out(self):
@@ -84,7 +77,7 @@ class relational_map:
             for x in xrange(0,len(lines),3):
                 new_node = node()
                 new_node.read_in(lines[x] + lines[x+1])
-                node_hash[new_node.word + new_node.pos] = new_node
+                self.node_hash[new_node.word + new_node.pos] = new_node
             f.close()
 
     # Outputs the relational map to a file with the given filename as text
@@ -117,24 +110,27 @@ class relational_map:
 
             current_word = words[x]
 
-            print "Current word:" + current_word
+            # If this is not the first occurance of this word, skip this cycle
+            if(words.count(current_word) > 1 and words.index(current_word) != x):
+                continue
 
             # words before
             for word in words[:x]:
                 split_word = word.split()
-                print "word before = " + split_word[0] 
                 self.node_hash[current_word].link( split_word[0], split_word[1])
 
             # words after
             for word in words[x+1:]:
                 split_word = word.split()
-                print "word after = " + split_word[0] 
                 self.node_hash[current_word].link( split_word[0], split_word[1])
 
     # Returns a list of the top links given a word_tuple (<word>, <part_of_speech>), as a list of tuples [(word, pos), ...]
     def get_top_links_for_word(self, word_tuple, n, pos = ""):
         # make "<word> <part_of_speech>" for indexing hash
-        word_index = word_tuple[0] + " " + word_tuple[1];
-        return self.node_hash[word_index].get_top_links(n,pos)
+        word_index = word_tuple[0] + " " + str(word_tuple[1]);
+        if word_index in self.node_hash:
+            return self.node_hash[word_index].get_top_links(n,pos)
+        else:
+            raise Exception("Word tuple: " + str(word_tuple) + " not in network")
 
 

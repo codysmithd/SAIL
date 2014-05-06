@@ -1,9 +1,15 @@
+land 1
+cow_1 1 king_1 1 blue_1 1 car_1 2 
+
 cow 1
-king_1 1 car_1 1 
+land_1 1 king_1 1 blue_1 1 car_1 2 
 
 king 1
-cow_1 1 car_1 1 
+land_1 1 cow_1 1 blue_1 1 car_1 2 
+
+blue 1
+land_1 1 cow_1 1 king_1 1 car_1 2 
 
 car 1
-cow_1 1 king_1 1 
+land_1 1 cow_1 1 king_1 1 blue_1 1 
 
