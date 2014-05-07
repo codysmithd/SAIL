@@ -66,7 +66,7 @@ class relational_map:
 
     # Loads in a relational map from text file
     def load_from_file(self, filename):
-        f = open(filename, 'r')
+        f = gzip.open(filename, 'rb')
         if(f):
             lines = f.readlines()
             for x in xrange(0,len(lines),3):
@@ -77,7 +77,7 @@ class relational_map:
 
     # Outputs the relational map to a file with the given filename as text
     def output_file(self, filename):
-        f = open(filename, 'w')
+        f = gzip.open(filename, 'wb')
         if(f):
             for key in self.node_hash:
                 f.write(self.node_hash[key].print_out())

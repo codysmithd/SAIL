@@ -1,3 +1,4 @@
+import json
 from relational import relational_map
 
 print "Loading corpus"
@@ -14,6 +15,8 @@ long_term = relational_map()
 
 n = 0
 
+print("\n")
+
 for sentence in sentences:
 	words_pos = []
 	for tuples in sentence:
@@ -23,6 +26,6 @@ for sentence in sentences:
 	n += 1
 
 print "Outputting Text"
-long_term.output_file("output.txt") # Output regular-text version
+long_term.output_file("long_term.txt.gzip") # Output regular-text version
 
 print "Done."
