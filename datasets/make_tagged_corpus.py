@@ -4,31 +4,53 @@ It takes a while...
 '''
 
 #locks to prevent accidental execution
-'''
+
 import json
 import nltk
-'''
+
 
 
 '''
 Preprocess tokens
 '''
 
-remove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "(", ")"]
-fullstop = ["?", ";"]
+remove = ["", "-", "--", "pa", "af", "u", "wb", "n't"]
+containRemove = ["\"", "\'", "\'\'", ",", ":", "`", "``", "*", "@", "#", "/", "\\", "<", ">", "+", "=", "|", "_", "~", "^", "%", "&", "(", ")", "[", "]", "{", "}"]
+fullstop = ["?", ";", "!", "!!", "!!!", "..", "...", "....", "'."]
+
+def is_number(s):
+	try:
+		int(s)
+		return True
+	except ValueError:
+		return False
+
+# returns boolean of whether it should be added to the corpus
+def discriminate(x):
+	if x in remove: # predefined list of stuff to ditch
+		return False
+	if (x[0] == "u") and is_number(x[1:]): # no weird unicode characters
+		return False
+	for test in containRemove: # test if the string contains anything illegal
+		if test in x:
+			return False
+	return True
+
+print "Loading words..."
 
 words = nltk.corpus.brown.words()
 words += nltk.corpus.nps_chat.words()
 
-print "total words: " + str(len(words))
+print "Total words: " + str(len(words))
+print "Striping bad words..."
 
-# ditch some punctuation
-words = [x for x in words if x not in remove]
+# ditch stuff
+words = [x for x in words if discriminate(x)]
 
 # convert other punctuation to periods
 words = ["." if word in fullstop else word for word in words]
 
-print "without punctuation: " + str(len(words))
+print "Total words: " + str(len(words))
 
 
 
@@ -36,6 +58,7 @@ print "without punctuation: " + str(len(words))
 split into sentences
 '''
 
+print "Splitting into sentences"
 
 sentences = []
 current = []
@@ -48,7 +71,7 @@ for word in words:
 		current.append(word.lower())
 
 total_sents = len(sentences)
-print "sentences: " + str(total_sents)
+print "Sentences: " + str(total_sents)
 
 
 
@@ -57,7 +80,7 @@ print "sentences: " + str(total_sents)
 Part of speech tagging
 '''
 
-print "tagging parts of speech..."
+print "Tagging parts of speech..."
 
 parts = []
 counter = 0

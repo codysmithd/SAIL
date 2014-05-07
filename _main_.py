@@ -62,23 +62,19 @@ while running:
 			seed_words += long_term.get_top_links_for_word(token, 50)
 
 
-		# [DEBUG ONLY] rate the users sentence
-		#print sentence_assembler.rateSentence(tagged_tokens)
-
 		print seed_words
 
 		result = ""
-		#result = sentence_assembler.run([0, 1], seed_words)
-
-		
 		count = 20
 		while (result == "") and (count > 0):
+
 			# choose a structure
 			struct = structures.getRandom()
 			print "choose structure: " + str(struct)
+
 			# assemble sentence
 			result = sentence_assembler.run(struct, seed_words)
-			# count
+
 			count -= 1
 		
 		print result

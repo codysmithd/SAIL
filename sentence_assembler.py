@@ -1,7 +1,7 @@
 
 
 import ngram
-from random import randint
+import random
 
 
 def load():
@@ -41,7 +41,7 @@ def run(structure, word_options):
 				print "abort find----------"
 				'''
 				options = ngram.getNextWords(prev, pos)
-				sentence.append(options[randint(0, len(options) - 1)])
+				sentence.append(random.choice(options))
 				'''
 				return ""
 

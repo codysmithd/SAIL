@@ -1,7 +1,7 @@
 
 
 import json
-from random import randint
+import random
 
 structures = None
 pos_tags = None
@@ -21,7 +21,7 @@ def load():
 	f.close()
 
 def getRandom():
-	return structures[randint(0, len(structures))]
+	return random.choice(structures)
 
 def convertPos(words):
 	global pos_tags
