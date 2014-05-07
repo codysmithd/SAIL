@@ -7,6 +7,7 @@ It takes a while...
 
 import json
 import nltk
+import string
 
 
 
@@ -31,6 +32,8 @@ def discriminate(x):
 		return False
 	if (x[0] == "u") and is_number(x[1:]): # no weird unicode characters
 		return False
+	if x[0] not in string.printable:
+		return False
 	for test in containRemove: # test if the string contains anything illegal
 		if test in x:
 			return False
@@ -38,14 +41,19 @@ def discriminate(x):
 
 print "Loading words..."
 
-words = nltk.corpus.brown.words()
-words += nltk.corpus.nps_chat.words()
+raw_words = nltk.corpus.brown.words()
+raw_words += nltk.corpus.nps_chat.words()
 
-print "Total words: " + str(len(words))
+print "Total words: " + str(len(raw_words))
 print "Striping bad words..."
 
 # ditch stuff
-words = [x for x in words if discriminate(x)]
+
+words = []
+
+for word in raw_words:
+	if discriminate(word):
+		words.append(word.encode("utf-8"))
 
 # convert other punctuation to periods
 words = ["." if word in fullstop else word for word in words]
@@ -65,14 +73,14 @@ current = []
 
 for word in words:
 	if word == ".":
-		sentences.append(current)
+		if len(current) > 0:
+			sentences.append(current)
 		current = []
 	else:
 		current.append(word.lower())
 
 total_sents = len(sentences)
 print "Sentences: " + str(total_sents)
-
 
 
 
