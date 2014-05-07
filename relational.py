@@ -29,7 +29,7 @@ class node:
         top_links = []
         for key in self.links:
             if(key.split()[1] == pos or pos == ""):
-                top_links.append( (key.split()[0], self.links[key]) )
+                top_links.append( ( (key.split()[0],key.split()[1]) , self.links[key]) )
         top_links.sort(key=lambda tup: tup[1], reverse=True) 
         return [ value[0] for value in top_links[:n] ]
 
