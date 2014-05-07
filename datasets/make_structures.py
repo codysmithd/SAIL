@@ -20,7 +20,7 @@ f.close()
 
 print "compiling structures"
 
-structures = []
+struct_dict = {}
 total_sents = len(sentences)
 count = 0
 
@@ -33,9 +33,37 @@ for sentence in sentences:
 	for word in sentence:
 		l.append(word[1])
 	t = tuple(l)
-	if len(t) <= 8:
-		if t not in structures:
-			structures.append(t)
+	if len(t) <= 10 and len(t) >= 2:
+		# add it if it's not already there
+		t_string = str(t)
+
+		if not struct_dict.has_key(t_string):
+			struct_dict[t_string] = [0, t]
+
+		struct_dict[t_string][0] += 1
+
+
+# put results in list
+
+structures = []
+
+for struct in struct_dict:
+	struct = struct_dict[struct]
+	structures.append(struct)
+
+# sort for the highest, in descending order
+structures.sort(key=lambda x: x[0], reverse=True)
+
+# take the top x sentences
+structures = structures[0:50]
+
+# eliminate the count variable
+for index, value in enumerate(structures):
+	structures[index] = value[1]
+
+
+print structures
+
 
 print "building JSON..."
 

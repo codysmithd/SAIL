@@ -58,7 +58,7 @@ while running:
 
 		# assemble sentence
 		#print sentence_assembler.rateSentence(tagged_tokens)
-		print sentence_assembler.run(struct, tagged_tokens)
+		print sentence_assembler.run([0, 1], tagged_tokens)
 
 
 clearConsole()
