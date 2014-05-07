@@ -7,12 +7,19 @@ import os
 import nltk
 import structures
 import sentence_assembler
+from relational import relational_map
 
 
 # inits
 structures.load()
 sentence_assembler.load()
 
+print "loading long term memory"
+
+long_term = relational_map()
+long_term.load_from_file("long_term.txt.gzip")
+
+print "done loading memory"
 
 
 '''
@@ -49,16 +56,19 @@ while running:
 		#convert pos to IDs
 		tagged_tokens = structures.convertPos(tagged_tokens)
 
-
-
 		# get words from relationals
+		seed_words = []
+		for token in tagged_tokens:
+			seed_words += long_term.get_top_links_for_word(token, 50)
+
+		print seed_words
 
 		# choose a structure
 		struct = structures.getRandom()
 
 		# assemble sentence
 		#print sentence_assembler.rateSentence(tagged_tokens)
-		print sentence_assembler.run(struct, tagged_tokens)[1]
+		#print sentence_assembler.run(struct, seed_words)[1]
 
 
 clearConsole()
