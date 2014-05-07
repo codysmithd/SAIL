@@ -4,11 +4,27 @@ Setup
 '''
 
 import os
+import sys
 import nltk
 import structures
 import sentence_assembler
 from relational import relational_map
 
+'''
+try:
+	import nltk
+except:
+	print "Please install NLTK"
+	raw_input() # wait for user
+	sys.exit()
+
+try:
+	nltk.pos_tag(["asdf", "asdf"])
+except:
+	print "Please install NLTK"
+	raw_input() # 
+	sys.exit()
+'''
 
 # inits
 structures.load()
@@ -82,7 +98,7 @@ while running:
 			print "choose structure: " + str(struct)
 
 			# assemble sentence
-			result = sentence_assembler.run(struct, primary_seeds, secondary_seeds)
+			result = sentence_assembler.run([7, 15, 2, 0, 4, 1], primary_seeds, secondary_seeds)
 
 			count -= 1
 		

@@ -32,24 +32,30 @@ def run(structure, primary_options, secondary_options):
 
 			# use ngrams to find the
 			print "primary find..."
+
+			current_list = None
+
 			best = findBest(prev, primary_options, pos)
-
-			if best == -1:
-				print "secondary find..."
+			if best != -1:
+				current_list = primary_options
+			else:
 				best = findBest(prev, secondary_options, pos)
+				if best != -1:
+					current_list = secondary_options
 
-			if best == -1:
+
+
+			if current_list != None:
+				sentence.append(current_list[best][0])
+				current_list.pop(best)
+			else:
 				print "abort find----------"
 				'''
 				options = ngram.getNextWords(prev, pos)
 				sentence.append(random.choice(options))
 				'''
 				return ""
-			else:
-				# add the best word as the next word in the sentence
-				sentence.append(primary_options[best][0])
-				# remove the word from the options
-				primary_options.pop(best)
+
 
 	# convert to space seperated string
 	sentence = " ".join(sentence)
