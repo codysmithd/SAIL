@@ -1,18 +1,25 @@
 from relational import relational_map
+import cPickle as pickle
 
 # Test relational_map
 
 database = relational_map()
 
-words = [("cow",1),("car",1),("king",1),("car",1),("blue",1),("land",1)]
+print("Loading in database")
 
-database.link_words(words)
+#with open("relational_pickle.data",'wb') as file_pointer:
+ #   database = pickle.load(file_pointer)
 
-database.output_file("relational_test.txt")
+database.load_from_file("output.txt")
 
-print(database.get_top_links_for_word(("cow",1), 3 ) )
+print("database loaded")
 
-#database2 = relational_map()
-#database2.load_from_file("relational_test.txt")
+# Add cow to db
+database.link_words(
+		[
+			("cow",1),
+			("cheese",1)
+		]
+	)
 
-#database2.output_file("relational_test2.txt")
+print(database.get_top_links_for_word(("cow",1), 5 ) )
