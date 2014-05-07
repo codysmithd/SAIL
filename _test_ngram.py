@@ -3,6 +3,5 @@ import ngram
 
 ngram.load()
 
-print ngram.query("<s>")
-
-raw_input()
+while True:
+	print ngram.query(raw_input("Enter word to test: "))

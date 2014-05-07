@@ -12,31 +12,32 @@ def rateSentence(words):
 	return ngram.rateSentence(words)
 
 # make sentence using the supplied words
-def run(structure, word_options):
+def run(structure, primary_options, secondary_options):
 
 	sentence = []
 
 	print "==========================================="
 
-	if len(word_options) >= len(structure):
+	if len(primary_options) >= len(structure):
 		print structure
 
 		# loop through word spots in the structure
 		for pos in structure:
-			print "position: " + str(len(sentence))
-			print "part of speech: " + str(pos)
-
 			# get the previous words in the sentence
 			prev = getPrevious(sentence)
 
+			print "position: " + str(len(sentence))
+			print "part of speech: " + str(pos)
 			print "previous: " + str(prev)
 
-			# use ngrams to find the 
-			best = findBest(prev, word_options, pos)
+			# use ngrams to find the
+			print "primary find..."
+			best = findBest(prev, primary_options, pos)
 
-			print "best: " + str(best)
+			if best == -1:
+				print "secondary find..."
+				best = findBest(prev, secondary_options, pos)
 
-			# if nothing was found
 			if best == -1:
 				print "abort find----------"
 				'''
@@ -44,13 +45,11 @@ def run(structure, word_options):
 				sentence.append(random.choice(options))
 				'''
 				return ""
-
 			else:
 				# add the best word as the next word in the sentence
-				sentence.append(word_options[best][0])
-
+				sentence.append(primary_options[best][0])
 				# remove the word from the options
-				word_options.pop(best)
+				primary_options.pop(best)
 
 	# convert to space seperated string
 	sentence = " ".join(sentence)

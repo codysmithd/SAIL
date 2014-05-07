@@ -57,12 +57,21 @@ while running:
 		tagged_tokens = structures.convertPos(tagged_tokens)
 
 		# get words from relationals
-		seed_words = []
+		["DT", "NN", "VBD", "IN", "JJ", "VBN", "NNS", "RB", "WDT", "VBZ", "CC", "TO", "VB", "NNP", "VBG", "PRP", "VBP", "JJS", "CD", "MD", "JJR", "PRP$", "WRB", "EX", "LS", "WP", "RP", "RBR", "-NONE-", "RBS", "PDT", "WP$", "FW", ":", ".", "$", "``"]
+		primary_pos_tags = [1, 2, 4, 5, 6, 7, 8, 12, 13, 14, 16]
+		primary_seeds = []
+		secondary_seeds = []
+
 		for token in tagged_tokens:
-			seed_words += long_term.get_top_links_for_word(token, 50)
+			# get the top links for this token
+			top_links = long_term.get_top_links_for_word(token, 50)
 
+			# sort the new words based on part-of-speech priority
+			if token[1] in primary_pos_tags:
+				primary_seeds += top_links
+			else:
+				secondary_seeds += top_links
 
-		print seed_words
 
 		result = ""
 		count = 20
@@ -73,7 +82,7 @@ while running:
 			print "choose structure: " + str(struct)
 
 			# assemble sentence
-			result = sentence_assembler.run(struct, seed_words)
+			result = sentence_assembler.run(struct, primary_seeds, secondary_seeds)
 
 			count -= 1
 		
