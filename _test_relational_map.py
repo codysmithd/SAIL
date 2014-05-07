@@ -1,5 +1,4 @@
 from relational import relational_map
-import cPickle as pickle
 
 # Test relational_map
 
@@ -14,12 +13,7 @@ database.load_from_file("output.txt")
 
 print("database loaded")
 
-# Add cow to db
-database.link_words(
-		[
-			("cow",1),
-			("cheese",1)
-		]
-	)
-
-print(database.get_top_links_for_word(("cow",1), 5 ) )
+while(True):
+	user_input = raw_input("\nWhat would you like to see links for?\n")
+	print("Top links for " + user_input.split()[0])
+	print(database.get_top_links_for_word((user_input.split()[0],1), 10) )
