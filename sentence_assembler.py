@@ -50,7 +50,7 @@ def run(structure, word_options):
 				sentence.append(word_options[best][0])
 
 				# remove the word from the options
-				#word_options.pop(best)
+				word_options.pop(best)
 
 	# convert to space seperated string
 	sentence = " ".join(sentence)

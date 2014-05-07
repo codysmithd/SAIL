@@ -33,7 +33,7 @@ for sentence in sentences:
 	for word in sentence:
 		l.append(word[1])
 	t = tuple(l)
-	if len(t) <= 10 and len(t) >= 2:
+	if len(t) <= 20 and len(t) >= 6:
 		# add it if it's not already there
 		t_string = str(t)
 
