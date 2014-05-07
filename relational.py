@@ -28,7 +28,7 @@ class node:
     def get_top_links(self, n, pos = ""):
         top_links = []
         for key in self.links:
-            if(key.split()[1] == pos or pos == ""):
+            if((pos == "" or key.split()[1] == pos) and len(key.split()) > 1 ):
                 top_links.append( ( (key.split()[0],key.split()[1]) , self.links[key]) )
         top_links.sort(key=lambda tup: tup[1], reverse=True) 
         return [ value[0] for value in top_links[:n] ]
@@ -125,4 +125,4 @@ class relational_map:
         if word_index in self.node_hash:
             return self.node_hash[word_index].get_top_links(n,pos)
         else:
-            print("Word tuple: " + str(word_tuple) + " not in network")
+            return []
