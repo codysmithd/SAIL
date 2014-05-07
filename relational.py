@@ -91,9 +91,9 @@ class relational_map:
         
         # convert words_tuple in words (where words[n] = "<word> <part_of_speech>")
         words = []
-
         for word_tuple in words_tuple:
-            words.append(word_tuple[0] + " " + str(word_tuple[1]))
+            if(word_tuple[0] and word_tuple[1]):
+                words.append(word_tuple[0] + " " + str(word_tuple[1]))
 
         # Add nodes not in node_hash
         for word_index in words:
