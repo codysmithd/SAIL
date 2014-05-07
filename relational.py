@@ -1,13 +1,8 @@
-'''
-File Format:
-<SOURCE_WORD>
-<NODE> <COUNT> ...
-'''
+import gzip
 
 # Class that contains a Word, Part Of Speech (POS), and of hash table of weighted sums to other words
 class node:
 
-    #TODO
     def __init__(self, word = "", pos = ""):
         self.word = word.lower()
         self.pos = pos.lower()
@@ -50,15 +45,17 @@ class node:
     def read_in(self, string):
         lines = string.splitlines()
 
-        # First line: "<word>  <part_of_speech>"
-        self.word = lines[0].split()[0]
-        self.pos = lines[0].split()[1]
+        if(len(lines) >= 2):
 
-        # 2nd line: "<word>_<part_of_speech> <weight>"
-        links = lines[1].split()
-        for x in xrange(0, len(links), 2):
-            node = links[x].split('_')
-            self.link(node[0],node[1],links[x+1])
+            # First line: "<word>  <part_of_speech>"
+            self.word = lines[0].split()[0]
+            self.pos = lines[0].split()[1]
+
+            # 2nd line: "<word>_<part_of_speech> <weight>"
+            links = lines[1].split()
+            for x in xrange(0, len(links), 2):
+                node = links[x].split('_')
+                self.link(node[0],node[1],int(links[x+1]))
 
 
 # Class that contains a list of nodes that link to each other with weights.
@@ -74,8 +71,8 @@ class relational_map:
             lines = f.readlines()
             for x in xrange(0,len(lines),3):
                 new_node = node()
-                new_node.read_in(lines[x] + lines[x+1])
-                self.node_hash[new_node.word + new_node.pos] = new_node
+                new_node.read_in(lines[x] + lines[x+1].rstrip('\n'))
+                self.node_hash[new_node.word + " " + new_node.pos] = new_node
             f.close()
 
     # Outputs the relational map to a file with the given filename as text
@@ -128,4 +125,4 @@ class relational_map:
         if word_index in self.node_hash:
             return self.node_hash[word_index].get_top_links(n,pos)
         else:
-            raise Exception("Word tuple: " + str(word_tuple) + " not in network")
+            print("Word tuple: " + str(word_tuple) + " not in network")
