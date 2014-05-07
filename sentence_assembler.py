@@ -28,7 +28,7 @@ def run(structure, word_options):
 			prev = getPrevious(sentence)
 
 			# use ngrams to find the 
-			best = findBest(prev[0], prev[1], word_options, pos)
+			best = findBest(prev, word_options, pos)
 
 			# if anything was found
 			if best == -1:
@@ -42,29 +42,27 @@ def run(structure, word_options):
 				#word_options.pop(best)
 
 	# convert to space seperated string
-	sentence = " ".join(sentence)
+	sentence = "\n" + " ".join(sentence) + "\n"
 	return (result, sentence)
 
 def getPrevious(sentence):
-	prev1 = "<s>"
-	prev2 = "<s>"
-
 	if len(sentence) >= 1:
-		prev1 = sentence[-1]
+		return sentence[-1]
+	else:
+		return "<s>"
 
-	if len(sentence) >= 2:
-		prev2 = sentence[-2]
-
-	return (prev2, prev1)
-
-def findBest(prev2, prev1, word_options, pos):
+def findBest(prev, word_options, pos):
 	best_index = -1
 	best_rating = 0
 	for index, option in enumerate(word_options):
 		# only look at word_options that are the right parts of speech
 		if option[1] == pos:
+
 			# get the ngram rating for this word
-			rating = ngram.getProb(prev2, prev1, option[0])
+			rating = ngram.getProb(prev, option[0])
+
+			print prev + " " + option[0] + " = " + str(rating)
+
 			# test if better
 			if rating > best_rating:
 				best_index = index

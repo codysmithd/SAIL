@@ -30,24 +30,21 @@ def load():
 def rateSentence(words):
 
 	rating = 0
-	prev1 = "<s>"
-	prev2 = "<s>"
+	prev = "<s>"
 
 	# backward ngrams
 	for word in words:
 		word = word[0]
-		rating += getProb(prev2, prev1, word)
+		rating += getProb(prev, word)
 		
-		prev2 = prev1
-		prev1 = word
+		prev = word
 	return rating
 
 
 
-def getProb(prev2, prev1, word):
+def getProb(prev, word):
 	global ngram_backward
 	if ngram_backward.has_key(word):
-		if ngram_backward[word].has_key(prev1):
-			if ngram_backward[word][prev1].has_key(prev2):
-				return ngram_backward[word][prev1][prev2][0]
+		if ngram_backward[word].has_key(prev):
+				return ngram_backward[word][prev][0]
 	return 0
