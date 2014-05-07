@@ -14,12 +14,12 @@ from relational import relational_map
 structures.load()
 sentence_assembler.load()
 
-print "loading long term memory"
+print "Loading long term memory..."
 
 long_term = relational_map()
 long_term.load_from_file("long_term.txt.gzip")
 
-print "done loading memory"
+print "Ready..."
 
 
 '''
@@ -65,18 +65,23 @@ while running:
 		# [DEBUG ONLY] rate the users sentence
 		#print sentence_assembler.rateSentence(tagged_tokens)
 
-		result = (-1, "")
+		print seed_words
+
+		result = ""
+		#result = sentence_assembler.run([0, 1], seed_words)
+
+		
 		count = 20
-		while (result[0] == -1) and (count > 0):
+		while (result == "") and (count > 0):
 			# choose a structure
 			struct = structures.getRandom()
-			print "chose structure: " + str(struct)
+			print "choose structure: " + str(struct)
 			# assemble sentence
 			result = sentence_assembler.run(struct, seed_words)
 			# count
 			count -= 1
-
-		print result[1]
+		
+		print result
 
 
 clearConsole()

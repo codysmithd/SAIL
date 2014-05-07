@@ -35,9 +35,10 @@ Build backward model
 print "building backward model..."
 
 backward_ngram = dict()
-prev = "<s>"
 
 for sentence in sentences:
+
+	prev = "<s>"
 
 	for tagged_token in sentence:
 
@@ -74,28 +75,26 @@ Build forward model
 print "building forward model..."
 
 forward_ngram = dict()
-prev = "</s>"
 
 for sentence in sentences:
 
-	reversedSent = list(sentence)
-	reversedSent.reverse()
+	prev = "<s>"
 
 	for tagged_token in sentence:
 
 		word = tagged_token[0]
 		pos = tagged_token[1]
 
-		if not forward_ngram.has_key(word):
-			forward_ngram[word] = dict()
+		if not forward_ngram.has_key(prev):
+			forward_ngram[prev] = dict()
 
-		if not forward_ngram[word].has_key(prev):
-			forward_ngram[word][prev] = [0, []]	
+		if not forward_ngram[prev].has_key(word):
+			forward_ngram[prev][word] = [0, []]	
 
-		forward_ngram[word][prev][0] += 1
+		forward_ngram[prev][word][0] += 1
 
-		if pos not in forward_ngram[word][prev][1]:
-			forward_ngram[word][prev][1].append(pos)
+		if pos not in forward_ngram[prev][word][1]:
+			forward_ngram[prev][word][1].append(pos)
 
 		prev = word
 

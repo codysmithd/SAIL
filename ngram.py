@@ -13,18 +13,15 @@ def load():
 
 	print "Loading ngram databases..."
 
-	
-	print "1 of 2"
 	f = open("datasets/ngram_backward.json", 'r')
 	ngram_backward = json.load(f)
 	f.close()
 	
-	'''
-	print "2 of 2"
+
 	f = open("datasets/ngram_forward.json", 'r')
 	ngram_forward = json.load(f)
 	f.close()
-	'''
+
 
 
 def rateSentence(words):
@@ -48,3 +45,20 @@ def getProb(prev, word):
 		if ngram_backward[word].has_key(prev):
 				return ngram_backward[word][prev][0]
 	return 0
+
+
+def getNextWords(prev, pos):
+	options = []
+	if ngram_forward.has_key(prev):
+		for tagged_token in ngram_forward[prev]:
+			if tagged_token[1] == pos:
+				print "abort find: " + tagged_token[0]
+				options.append(tagged_token[0])
+	return options
+
+
+def query(word):
+	if ngram_forward.has_key(word):
+		return ngram_forward[word]
+	else:
+		return None
