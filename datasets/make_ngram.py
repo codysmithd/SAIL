@@ -40,26 +40,24 @@ prev2 = "<s>"
 
 for sentence in sentences:
 
-	for index, word in enumerate(sentence):
+	for tagged_token in sentence:
 
-		pos = word[1]
-		word = word[0]
+		word = tagged_token[0]
+		pos = tagged_token[1]
 
-		if index >= 1:
+		if not backward_ngram.has_key(word):
+			backward_ngram[word] = dict()
 
-			if not backward_ngram.has_key(word):
-				backward_ngram[word] = dict()
+		if not backward_ngram[word].has_key(prev1):
+			backward_ngram[word][prev1] = dict()	
 
-			if not backward_ngram[word].has_key(prev1):
-				backward_ngram[word][prev1] = dict()	
+		if not backward_ngram[word][prev1].has_key(prev2):
+			backward_ngram[word][prev1][prev2] = [0, []]
 
-			if not backward_ngram[word][prev1].has_key(prev2):
-				backward_ngram[word][prev1][prev2] = [0, []]
+		backward_ngram[word][prev1][prev2][0] += 1
 
-			backward_ngram[word][prev1][prev2][0] += 1
-
-			if pos not in backward_ngram[word][prev1][prev2][1]:
-				backward_ngram[word][prev1][prev2][1].append(pos)
+		if pos not in backward_ngram[word][prev1][prev2][1]:
+			backward_ngram[word][prev1][prev2][1].append(pos)
 
 		prev2 = prev1
 		prev1 = word
@@ -81,34 +79,32 @@ Build forward model
 print "building forward model..."
 
 forward_ngram = dict()
-prev1 = "<s>"
-prev2 = "<s>"
+prev1 = "</s>"
+prev2 = "</s>"
 
 for sentence in sentences:
 
 	reversedSent = list(sentence)
 	reversedSent.reverse()
 
-	for index, word in enumerate(reversedSent):
+	for tagged_token in sentence:
 
-		pos = word[1]
-		word = word[0]
+		word = tagged_token[0]
+		pos = tagged_token[1]
 
-		if index >= 1:
+		if not forward_ngram.has_key(word):
+			forward_ngram[word] = dict()
 
-			if not forward_ngram.has_key(word):
-				forward_ngram[word] = dict()
+		if not forward_ngram[word].has_key(prev1):
+			forward_ngram[word][prev1] = dict()	
 
-			if not forward_ngram[word].has_key(prev1):
-				forward_ngram[word][prev1] = dict()	
+		if not forward_ngram[word][prev1].has_key(prev2):
+			forward_ngram[word][prev1][prev2] = [0, []]
 
-			if not forward_ngram[word][prev1].has_key(prev2):
-				forward_ngram[word][prev1][prev2] = [0, []]
+		forward_ngram[word][prev1][prev2][0] += 1
 
-			forward_ngram[word][prev1][prev2][0] += 1
-
-			if pos not in forward_ngram[word][prev1][prev2][1]:
-				forward_ngram[word][prev1][prev2][1].append(pos)
+		if pos not in forward_ngram[word][prev1][prev2][1]:
+			forward_ngram[word][prev1][prev2][1].append(pos)
 
 		prev2 = prev1
 		prev1 = word

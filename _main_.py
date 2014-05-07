@@ -5,13 +5,13 @@ Setup
 
 import os
 import nltk
-import ngram
+import structures
+import sentence_assembler
 
 
-
-# init assembler
-#from sentence_assembler import sentence_assembler
-#assembler = sentence_assembler()
+# inits
+structures.load()
+sentence_assembler.load()
 
 
 
@@ -47,10 +47,18 @@ while running:
 		tagged_tokens = nltk.pos_tag(tokens)
 
 		#convert pos to IDs
-		tagged_tokens = ngram.convertPos(tagged_tokens)
+		tagged_tokens = structures.convertPos(tagged_tokens)
+
+
+
+		# get words from relationals
+
+		# choose a structure
+		struct = structures.getRandom()
 
 		# assemble sentence
-		#print assembler.run(tagged_tokens)
+		#print sentence_assembler.rateSentence(tagged_tokens)
+		print sentence_assembler.run(struct, tagged_tokens)
 
 
 clearConsole()
