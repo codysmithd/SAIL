@@ -61,14 +61,13 @@ while running:
 		for token in tagged_tokens:
 			seed_words += long_term.get_top_links_for_word(token, 50)
 
-		print seed_words
 
 		# choose a structure
 		struct = structures.getRandom()
 
 		# assemble sentence
 		#print sentence_assembler.rateSentence(tagged_tokens)
-		#print sentence_assembler.run(struct, seed_words)[1]
+		print sentence_assembler.run(struct, seed_words)[1]
 
 
 clearConsole()
