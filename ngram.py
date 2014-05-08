@@ -3,94 +3,50 @@
 import json
 
 
-unigram_backward = None
-unigram_forward = None
-bigram_backward = None
-bigram_forward = None
+bigram = None
 
 
 def load():
-	global unigram_backward
-	global unigram_forward
-	global bigram_backward
-	global bigram_forward
+	global bigram
 
-	print "Loading unigram databases..."
+	print "Loading bigram database..."
 
-	f = open("datasets/unigram_backward.json", 'r')
-	unigram_backward = json.load(f)
+	f = open("datasets/bigram.json", 'r')
+	bigram = json.load(f)
 	f.close()
-	
-	'''
-	f = open("datasets/unigram_forward.json", 'r')
-	unigram_forward = json.load(f)
-	f.close()
-	'''
-
-	print "Loading bigram databases..."
-
-	f = open("datasets/bigram_backward.json", 'r')
-	bigram_backward = json.load(f)
-	f.close()
-
-	'''
-	f = open("datasets/bigram_forward.json", 'r')
-	bigram_forward = json.load(f)
-	f.close()
-	'''
 
 
 
 def rateSentence(words):
 
+	# copy, and add the end tags
+	words = list(words)
+	words.extend(("</s>", "</s>"))
+
 	rating = 0
-	prev = "<s>"
+	total = 0
 
-	# backward unigrams
-	for word in words:
-		word = word[0]
-		rating += getProb(prev, word)
-		
-		prev = word
-	return rating
+	word1 = "<s>"
+	word2 = "<s>"
+
+	for word3 in words:
+
+		result = get_bigram_score(word1, word2, word3)
+		rating += result
+
+		if result > 0:
+			total += 1
+
+		# walk the buffers
+		word1 = word2
+		word2 = word3
+
+	return (total, rating)
 
 
-
-def unigram(prev, word):
-	global unigram_backward
-	if unigram_backward.has_key(word):
-		if unigram_backward[word].has_key(prev):
-				return unigram_backward[word][prev][0]
+def get_bigram_score(word1, word2, word3):
+	if bigram.has_key(word1):
+		if bigram[word1].has_key(word2):
+			if bigram[word1][word2].has_key(word3):
+				return bigram[word1][word2][word3]
 	return 0
-
-
-def bigram(prev2, prev1, word):
-	global bigram_backward
-	if bigram_backward.has_key(word):
-		if bigram_backward[word].has_key(prev1):
-			if bigram_backward[word][prev1].has_key(prev2):
-				return bigram_backward[word][prev1][prev2][0]
-	return 0
-
-
-def getNextWords(prev, pos):
-	options = []
-	if unigram_forward.has_key(prev):
-		for tagged_token in unigram_forward[prev]:
-			if tagged_token[1] == pos:
-				print "abort find: " + tagged_token[0]
-				options.append(tagged_token[0])
-	return options
-
-
-def queryForward(word):
-	if unigram_forward.has_key(word):
-		return unigram_forward[word]
-	else:
-		return None
-
-def queryBackward(word):
-	if unigram_backward.has_key(word):
-		return unigram_backward[word]
-	else:
-		return None

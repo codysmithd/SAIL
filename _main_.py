@@ -52,12 +52,6 @@ Main loop
 def clearConsole():
 	os.system(['clear','cls'][os.name == 'nt'])
 
-def removeDuplicates(options):
-	s = set()
-	for word in options:
-		s.add(word)
-	return list(s)
-
 
 clearConsole()
 
@@ -105,10 +99,6 @@ while running:
 				primary_seeds += top_links
 			else:
 				secondary_seeds += top_links
-
-		# remove duplicates
-		primary_seeds = removeDuplicates(primary_seeds)
-		secondary_seeds = removeDuplicates(secondary_seeds)
 
 
 		result = ""

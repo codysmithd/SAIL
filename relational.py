@@ -26,12 +26,12 @@ class node:
 
     # Returns a list of size n of the top links in-order, optionally given a Part Of Speech (POS)
     def get_top_links(self, n, pos = ""):
-        top_links = [] # (<word>,<pos>,<weight>)
+        top_links = []
         for key in self.links:
             if((pos == "" or key.split()[1] == pos) and len(key.split()) > 1 ):
-                top_links.append( (key.split()[0], key.split()[1] ,self.links[key]) )
-        top_links.sort(key=lambda tup: tup[2], reverse=True) 
-        return top_links[:n]
+                top_links.append( ( (key.split()[0],key.split()[1]) , self.links[key]) )
+        top_links.sort(key=lambda tup: tup[1], reverse=True)
+        return [ value[0] for value in top_links[:n] ]
 
     # Returns a string formatted for output
     def print_out(self):
