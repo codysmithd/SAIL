@@ -16,10 +16,7 @@ def run(structure, primary_options, secondary_options):
 
 	sentence = []
 
-	print "==========================================="
-
 	if len(primary_options) >= len(structure):
-		print structure
 
 		# loop through word spots in the structure
 		for pos in structure:
@@ -32,16 +29,12 @@ def run(structure, primary_options, secondary_options):
 			print "previous: " + str(prev)
 			'''
 
-			# use ngrams to find the
-			print "primary find..."
-
 			current_list = None
 
 			best = findBest(prev, primary_options, pos)
 			if best != -1:
 				current_list = primary_options
 			else:
-				print "secondary find..."
 				best = findBest(prev, secondary_options, pos)
 				if best != -1:
 					current_list = secondary_options
