@@ -86,7 +86,7 @@ while running:
 		tagged_tokens = structures.convertPos(tagged_tokens)
 
 		# add the users words to the short term memory
-		# short_term.link_words(tagged_tokens)
+		short_term.link_words(tagged_tokens)
 
 		# get words from relationals
 		primary_pos_tags = [1, 2, 4, 5, 6, 7, 8, 12, 13, 14, 16]
@@ -106,6 +106,7 @@ while running:
 			else:
 				secondary_seeds += top_links
 
+		# remove duplicates
 		primary_seeds = removeDuplicates(primary_seeds)
 		secondary_seeds = removeDuplicates(secondary_seeds)
 

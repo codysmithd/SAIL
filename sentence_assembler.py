@@ -45,7 +45,6 @@ def run(structure, primary_options, secondary_options):
 				sentence.append(current_list[best][0])
 				current_list.pop(best)
 			else:
-				print "abort find----------"
 				'''
 				options = ngram.getNextWords(prev, pos)
 				sentence.append(random.choice(options))
@@ -98,7 +97,7 @@ def rateWord(prev, word, end):
 	if end:
 		prev2 = prev1
 		prev1 = word
-		word = "</s>"
+		word = ("</s>", 0)
 
 	# get the bigram rating for this word
 	rating = ngram.bigram(prev2, prev1, word[0])
