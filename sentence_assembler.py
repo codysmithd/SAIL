@@ -16,8 +16,6 @@ def rateSentence(words):
 def run(structure, primary_options, secondary_options):
 
 	sentence = []
-	primary_options = removeDuplicates(primary_options)
-	secondary_options = removeDuplicates(secondary_options)
 
 	if len(primary_options) >= len(structure):
 
@@ -105,9 +103,11 @@ def rateWord(prev, word, end):
 	# get the bigram rating for this word
 	rating = ngram.bigram(prev2, prev1, word[0])
 
+	
 	if rating == 0:
 		# get the unigram rating for this word
 		rating = ngram.unigram(prev1, word[0])
+	
 
 	if rating != 0:
 		# invert the rating
@@ -119,10 +119,3 @@ def rateWord(prev, word, end):
 
 	# print prev + " " + word[0] + " = " + str(rating)
 	return rating
-
-
-def removeDuplicates(options):
-	s = set()
-	for word in options:
-		s.add(word)
-	return list(s)
