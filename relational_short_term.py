@@ -1,4 +1,5 @@
 from relational import relational_map
+from relational import node
 
 # Short-term relational database that 'decrements' each link based on when it was added
 class short_term_relational(relational_map):
