@@ -8,6 +8,7 @@ import sys
 import structures
 import sentence_assembler
 from relational import relational_map
+from relational_short_term import short_term_relational
 
 
 # nltk import gaurds
@@ -32,6 +33,9 @@ except:
 # inits
 structures.load()
 sentence_assembler.load()
+
+print "Creating short term memory..."
+short_term = short_term_relational()
 
 print "Loading long term memory..."
 
@@ -80,9 +84,12 @@ while running:
 		primary_seeds = []
 		secondary_seeds = []
 
+		# Loops through users words
 		for token in tagged_tokens:
+
 			# get the top links for this token
 			top_links = long_term.get_top_links_for_word(token, 50)
+			top_links += short_term.get_top_links_for_word(token, 50)
 
 			# sort the new words based on part-of-speech priority
 			if token[1] in primary_pos_tags:
@@ -105,6 +112,8 @@ while running:
 			count -= 1
 		
 		print result
+
+		# Ask if this result makes sense TODO
 
 
 clearConsole()

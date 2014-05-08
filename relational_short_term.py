@@ -1,14 +1,14 @@
-import relational
+from relational import relational_map
 
 # Short-term relational database that 'decrements' each link based on when it was added
-class short_term_relational(relational.relational_map):
-	
-	__init__(self):
-		super(short_term_relational, self).__init__()
-		self.time = 0       # Global 'time' as an int value of number of accesses
-		self.time_deg = 100 # Value global time gets divided by to increase weights (larger = less steep curve)
+class short_term_relational(relational_map):
 
-	def link_words(self, words_tuple):
+    def __init__(self):
+       relational_map.__init__(self)
+       self.time = 0       # Global 'time' as an int value of number of accesses
+       self.time_deg = 100 # Value global time gets divided by to increase weights (larger = less steep curve)
+
+    def link_words(self, words_tuple):
         
         self.time += 1
 
