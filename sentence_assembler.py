@@ -27,24 +27,31 @@ def removeDuplicates(options):
 
 
 # make sentence using the supplied words
-def run(struct, primary_options, secondary_options):
+def run(struct, user_keywords, primary_words, secondary_words):
 	global sentence
 	global structure
 	global word_options
+	global finished_sentences
+	global max_rating
 
-
+	finished_sentences = []
+	max_rating = 0
 	sentence = [""] * len(struct)
 	structure = struct
-	word_options = primary_options
+	word_options = primary_words
 	word_options = removeDuplicates(word_options)
 	addWord(0)
 
 	if len(finished_sentences) == 0:
 		print "Secondary find"
-		word_options += secondary_options
+		finished_sentences = []
+		max_rating = 0
+		word_options += secondary_words
 		word_options = removeDuplicates(word_options)
 		addWord(0)
 
+
+	#finished_sentences = keywordFilter(finished_sentences, user_keywords)
 
 	print finished_sentences
 
@@ -89,3 +96,16 @@ def addSentence(rating):
 	global finished_sentences
 	string = " ".join(sentence)
 	return finished_sentences.append((string, rating))
+
+def keywordFilter(sentences, keywords):
+	output = []
+	for sentence in sentences:
+		if hasKeyword(sentence, keywords):
+			output.append(sentence)
+	return output
+
+def hasKeyword(sentence, keywords):
+	for token in keywords:
+		if token[0] in sentence[0]:
+			return True
+	return False

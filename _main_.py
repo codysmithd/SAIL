@@ -38,27 +38,24 @@ print "Creating short term memory..."
 short_term = short_term_relational()
 
 print "Loading long term memory..."
-
 long_term = relational_map()
 long_term.load_from_file("long_term.txt.gzip")
 
-print "Ready..."
+
+def clearConsole():
+	os.system(['clear','cls'][os.name == 'nt'])
+
+clearConsole()
+
 
 
 '''
 Main loop
 '''
 
-def clearConsole():
-	os.system(['clear','cls'][os.name == 'nt'])
-
-
-clearConsole()
-
-
 running = True
-exit_words = ["done", "exit", "quit"]
-remove_chars = [".", "," ,"\"", "\'", "?", ";"]
+exit_words = ["done", "exit", "quit", "exit()"]
+remove_chars = [".", "," ,"\"", "\'", "!", "?", ";", "`", "~", "@", "#", "$", "%", "^", "&", "*", "=", "+", "-", "_", "(", ")"]
 
 while running:
 	user_input = raw_input(">>> ").lower()
@@ -84,10 +81,10 @@ while running:
 
 		# get words from relationals
 		primary_pos_tags = [1, 2, 4, 5, 6, 7, 8, 12, 13, 14, 16]
-		primary_seeds = []
-		secondary_seeds = []
+		user_keywords = []
+		primary_words = []
+		secondary_words = []
 
-		# Loops through users words
 		for token in tagged_tokens:
 
 			# get the top links for this token
@@ -96,22 +93,20 @@ while running:
 
 			# sort the new words based on part-of-speech priority
 			if token[1] in primary_pos_tags:
-				primary_seeds += top_links
+				primary_words += top_links
+				primary_words.append(token)
+				user_keywords.append(token) # save off a list of the users nouns and verbs
 			else:
-				secondary_seeds += top_links
+				secondary_words += top_links
+				secondary_words.append(token)
 
 
 		result = ""
 		count = 20
 		while (result == "") and (count > 0):
-
-			# choose a structure
 			struct = structures.getRandom()
 			print "choose structure: " + str(struct)
-
-			# assemble sentence
-			result = sentence_assembler.run(struct, primary_seeds, secondary_seeds)
-
+			result = sentence_assembler.run(struct, user_keywords, primary_words, secondary_words)
 			count -= 1
 		
 		print result
