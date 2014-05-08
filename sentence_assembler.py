@@ -26,9 +26,11 @@ def run(structure, primary_options, secondary_options):
 			# get the previous words in the sentence
 			prev = getPrevious(sentence)
 
+			'''
 			print "position: " + str(len(sentence))
 			print "part of speech: " + str(pos)
 			print "previous: " + str(prev)
+			'''
 
 			# use ngrams to find the
 			print "primary find..."
@@ -39,10 +41,10 @@ def run(structure, primary_options, secondary_options):
 			if best != -1:
 				current_list = primary_options
 			else:
+				print "secondary find..."
 				best = findBest(prev, secondary_options, pos)
 				if best != -1:
 					current_list = secondary_options
-
 
 
 			if current_list != None:
@@ -62,6 +64,10 @@ def run(structure, primary_options, secondary_options):
 	return sentence
 
 def getPrevious(sentence):
+
+	prev1 = "<s>"
+	prev2 = "<s>"
+
 	if len(sentence) >= 1:
 		return sentence[-1]
 	else:
@@ -76,7 +82,7 @@ def findBest(prev, word_options, pos):
 		if int(option[1]) == pos:
 
 			# get the ngram rating for this word
-			rating = ngram.getProb(prev, option[0])
+			rating = ngram.unigram(prev, option[0])
 
 			print prev + " " + option[0] + " = " + str(rating)
 
