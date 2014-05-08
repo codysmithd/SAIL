@@ -84,7 +84,7 @@ def findBest(prev, word_options, pos):
 			# get the ngram rating for this word
 			rating = ngram.unigram(prev, option[0])
 
-			print prev + " " + option[0] + " = " + str(rating)
+			# print prev + " " + option[0] + " = " + str(rating)
 
 			# test if better
 			if rating > best_rating:
