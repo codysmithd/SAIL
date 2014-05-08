@@ -16,6 +16,8 @@ def rateSentence(words):
 def run(structure, primary_options, secondary_options):
 
 	sentence = []
+	primary_options = removeDuplicates(primary_options)
+	secondary_options = removeDuplicates(secondary_options)
 
 	print "==========================================="
 
@@ -115,3 +117,12 @@ def rateWord(prev, word):
 	rating += math.pow(int(option[2]), 2)
 
 	# print prev + " " + option[0] + " = " + str(rating)
+
+	return rating
+
+
+def removeDuplicates(options):
+	s = set()
+	for word in options:
+		s.add(word)
+	return list(s)
