@@ -80,8 +80,8 @@ def findBest(prev, word_options, pos):
 
 		# only look at word_options that are the right parts of speech
 		if int(option[1]) == pos:
-
-			rating = rateWord(prev, option)
+			end = index == (len(word_options) - 1)
+			rating = rateWord(prev, option, end)
 
 			# test if better
 			if rating > best_rating:
@@ -92,25 +92,32 @@ def findBest(prev, word_options, pos):
 
 
 
-def rateWord(prev, word):
+def rateWord(prev, word, end):
+
 	prev1 = prev[0]
 	prev2 = prev[1]
 
+	if end:
+		prev2 = prev1
+		prev1 = word
+		word = "</s>"
+
 	# get the bigram rating for this word
-	rating = ngram.bigram(prev2, prev1, option[0])
+	rating = ngram.bigram(prev2, prev1, word[0])
 
 	if rating == 0:
-		print "using unigram"
 		# get the unigram rating for this word
-		rating = ngram.unigram(prev1, option[0])
+		rating = ngram.unigram(prev1, word[0])
 
+	if rating != 0:
+		# invert the rating
+		rating *= -1
+		rating += 1000
 
+		# consider the strength of the relational linkage
+		rating += int(word[2])
 
-	# consider the strength of the relational linkage
-	rating += math.pow(int(option[2]), 2)
-
-	# print prev + " " + option[0] + " = " + str(rating)
-
+	# print prev + " " + word[0] + " = " + str(rating)
 	return rating
 
 

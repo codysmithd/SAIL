@@ -79,6 +79,9 @@ while running:
 		#convert pos to IDs
 		tagged_tokens = structures.convertPos(tagged_tokens)
 
+		# add the users words to the short term memory
+		short_term.link_words(tagged_tokens)
+
 		# get words from relationals
 		primary_pos_tags = [1, 2, 4, 5, 6, 7, 8, 12, 13, 14, 16]
 		primary_seeds = []
