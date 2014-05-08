@@ -52,8 +52,9 @@ print "Striping bad words..."
 words = []
 
 for word in raw_words:
+	word = word.strip()
 	if discriminate(word):
-		words.append(word.encode("utf-8"))
+		words.append(word)
 
 # convert other punctuation to periods
 words = ["." if word in fullstop else word for word in words]
