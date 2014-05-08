@@ -109,9 +109,12 @@ def rateWord(prev, word, end):
 	
 
 	if rating != 0:
+
 		# invert the rating
+		'''
 		rating *= -1
 		rating += 1000
+		'''
 
 		# consider the strength of the relational linkage
 		rating += int(word[2])
