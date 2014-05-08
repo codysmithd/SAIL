@@ -11,4 +11,6 @@ Dependancies
 
 How to use
 ---
-You don't. Not yet, at least
+You don't. Not yet, at least. Seriously, it's weird. However, if you were so inclined just go to your shell and run it:
+
+`python _main_.py`
