@@ -2,6 +2,7 @@
 
 import ngram
 import random
+import math
 
 
 def load():
@@ -69,22 +70,23 @@ def getPrevious(sentence):
 	prev2 = "<s>"
 
 	if len(sentence) >= 1:
-		return sentence[-1]
-	else:
-		return "<s>"
+		prev1 = sentence[-1]
+	if len(sentence) >= 2:
+		prev2 = sentence[-2]
+
+	return (prev1, prev2)
 
 def findBest(prev, word_options, pos):
+
 	best_index = -1
 	best_rating = 0
+
 	for index, option in enumerate(word_options):
 
 		# only look at word_options that are the right parts of speech
 		if int(option[1]) == pos:
 
-			# get the ngram rating for this word
-			rating = ngram.unigram(prev, option[0])
-
-			# print prev + " " + option[0] + " = " + str(rating)
+			rating = rateWord(prev, option)
 
 			# test if better
 			if rating > best_rating:
@@ -92,3 +94,24 @@ def findBest(prev, word_options, pos):
 				best_rating = rating
 
 	return best_index
+
+
+
+def rateWord(prev, word):
+	prev1 = prev[0]
+	prev2 = prev[1]
+
+	# get the bigram rating for this word
+	rating = ngram.bigram(prev2, prev1, option[0])
+
+	if rating == 0:
+		print "using unigram"
+		# get the unigram rating for this word
+		rating = ngram.unigram(prev1, option[0])
+
+
+
+	# consider the strength of the relational linkage
+	rating += math.pow(int(option[2]), 2)
+
+	# print prev + " " + option[0] + " = " + str(rating)
