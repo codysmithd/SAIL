@@ -33,7 +33,7 @@ for sentence in sentences:
 	for word in sentence:
 		l.append(word[1])
 	t = tuple(l)
-	if len(t) <= 10 and len(t) >= 4:
+	if len(t) <= 6 and len(t) >= 4:
 		# add it if it's not already there
 		t_string = str(t)
 
@@ -55,7 +55,7 @@ for struct in struct_dict:
 structures.sort(key=lambda x: x[0], reverse=True)
 
 # take the top x sentences
-structures = structures[0:50]
+structures = structures[0:60]
 
 # eliminate the count variable
 for index, value in enumerate(structures):

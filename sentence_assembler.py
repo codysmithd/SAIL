@@ -52,12 +52,13 @@ def run(struct, user_keywords, primary_words, secondary_words):
 
 
 	#finished_sentences = keywordFilter(finished_sentences, user_keywords)
-	print finished_sentences
 
 	if areValid():
+		print finished_sentences
 		finished_sentences.sort(key=lambda tup: tup[1], reverse=True)
 		return finished_sentences[0][0]
 	else:
+		print "I'm sorry user, I'm afraid I can't respond to that..."
 		return ""
 
 # WARING: recursion
@@ -113,5 +114,5 @@ def areValid():
 	global finished_sentences
 	global structure
 	global max_rating
-
-	return (len(finished_sentences) > 0) and (max_rating >= (len(structure) + 2 - 1))
+	
+	return (len(finished_sentences) > 0) and (max_rating >= (len(structure) + 2 - 2))
