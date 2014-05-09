@@ -70,6 +70,10 @@ def addWord(i):
 	if i == len(structure):
 		rateSentence()
 	else:
+		prev = "<s>"
+		if i >= 1:
+			prev = sentence[i - 1]
+
 		for word in word_options:
 			if int(word[1]) == structure[i]:
 				sentence[i] = word[0]
@@ -114,5 +118,5 @@ def areValid():
 	global finished_sentences
 	global structure
 	global max_rating
-	
-	return (len(finished_sentences) > 0) and (max_rating >= (len(structure) + 2 - 2))
+	#  and (max_rating >= (len(structure) + 2 - 3))
+	return (len(finished_sentences) > 0)

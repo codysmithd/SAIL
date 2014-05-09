@@ -50,3 +50,10 @@ def get_bigram_score(word1, word2, word3):
 			if bigram[word1][word2].has_key(word3):
 				return bigram[word1][word2][word3]
 	return 0
+
+def get_unigram_score(word1, word2):
+	if bigram.has_key(word1):
+		if bigram[word1].has_key(word2):
+			if bigram[word1][word2].has_key(word3):
+				return bigram[word1][word2][word3]
+	return 0
