@@ -56,9 +56,8 @@ def run(struct, user_keywords, primary_words, secondary_words):
 	if areValid():
 		print finished_sentences
 		finished_sentences.sort(key=lambda tup: tup[1], reverse=True)
-		return finished_sentences[0][0]
+		return random.choice(finished_sentences[0:50])[0]
 	else:
-		print "I'm sorry user, I'm afraid I can't respond to that..."
 		return ""
 
 # WARING: recursion

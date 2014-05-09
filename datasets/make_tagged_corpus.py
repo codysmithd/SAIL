@@ -28,6 +28,8 @@ def is_number(s):
 
 # returns boolean of whether it should be added to the corpus
 def discriminate(x):
+	global remove
+	global containRemove
 	if x in remove: # predefined list of stuff to ditch
 		return False
 	if (x[0] == "u") and is_number(x[1:]): # no weird unicode characters
@@ -75,7 +77,7 @@ current = []
 
 for word in words:
 	if word == ".":
-		if len(current) > 0:
+		if len(current) > 1:
 			sentences.append(current)
 		current = []
 	else:

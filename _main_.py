@@ -15,7 +15,7 @@ from relational_short_term import short_term_relational
 try:
 	import nltk
 except:
-	print "Please install NLTK"
+	print "Please install NLTK, with pyYAML and numpy"
 	raw_input() # wait for user
 	sys.exit()
 
@@ -109,7 +109,10 @@ while running:
 			result = sentence_assembler.run(struct, user_keywords, primary_words, secondary_words)
 			count -= 1
 		
-		print result
+		if result = "":
+			print "I'm sorry user, I'm afraid I can't respond to that..."
+		else:
+			print result
 
 		# Ask if this result makes sense TODO
 
