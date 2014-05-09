@@ -42,7 +42,7 @@ def run(struct, user_keywords, primary_words, secondary_words):
 	word_options = removeDuplicates(word_options)
 	addWord(0)
 
-	if areValid():
+	if not areValid():
 		print "I'm still thinking..."
 		finished_sentences = []
 		max_rating = 0
@@ -122,4 +122,4 @@ def areValid():
 	global structure
 	global max_rating
 	#  and (max_rating >= (len(structure) + 2 - 3))
-	return (len(finished_sentences) > 0)
+	return (len(finished_sentences) > 0) and (max_rating >= (len(structure) + 2 - 1))
