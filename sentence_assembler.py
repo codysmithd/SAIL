@@ -54,9 +54,8 @@ def run(struct, user_keywords, primary_words, secondary_words):
 	#finished_sentences = keywordFilter(finished_sentences, user_keywords)
 
 	if areValid():
-		print finished_sentences
-		finished_sentences.sort(key=lambda tup: tup[1], reverse=True)
-		return random.choice(finished_sentences[0:50])[0]
+		finished_sentences.sort(key=lambda tup: tup[2], reverse=True)
+		return random.choice(finished_sentences[0:50])
 	else:
 		return ""
 
@@ -73,10 +72,14 @@ def addWord(i):
 		if i >= 1:
 			prev = sentence[i - 1]
 
-		for word in word_options:
-			if int(word[1]) == structure[i]:
-				sentence[i] = word[0]
-				addWord(i+1)
+		for index, word in enumerate(word_options):
+			if word != "":
+				if int(word[1]) == structure[i]:
+					sentence[i] = word[0]
+					temp = word
+					word_options[index] = "" # remove from the list
+					addWord(i+1)
+					word_options[index] = temp # add back to the list
 
 
 
@@ -88,17 +91,18 @@ def rateSentence():
 	rating = ngram.rateSentence(sentence)
 
 	if rating[0] == max_rating:
-		addSentence(rating[1])
+		addSentence(rating)
 	elif rating[0] > max_rating:
 		max_rating = rating[0]
 		finished_sentences = []
-		addSentence(rating[1])
+		addSentence(rating)
 
 def addSentence(rating):
 	global sentence
 	global finished_sentences
 	string = " ".join(sentence)
-	return finished_sentences.append((string, rating))
+	dist = len(sentence) + 2 - rating[0]
+	return finished_sentences.append((string, dist, rating[1]))
 
 def keywordFilter(sentences, keywords):
 	output = []

@@ -109,7 +109,7 @@ while running:
 			result = sentence_assembler.run(struct, user_keywords, primary_words, secondary_words)
 			count -= 1
 		
-		if result = "":
+		if result == "":
 			print "I'm sorry user, I'm afraid I can't respond to that..."
 		else:
 			print result
