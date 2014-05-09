@@ -113,4 +113,5 @@ def areValid():
 	global finished_sentences
 	global structure
 	global max_rating
-	return ((len(finished_sentences) > 0) and ((max_rating >= (len(structure) + 2 - 1)))
+
+	return (len(finished_sentences) > 0) and (max_rating >= (len(structure) + 2 - 1))
