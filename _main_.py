@@ -105,7 +105,7 @@ while running:
 		count = 20
 		while (result == "") and (count > 0):
 			struct = structures.getRandom()
-			print "choose structure: " + str(struct)
+			#print "choose structure: " + str(struct)
 			result = sentence_assembler.run(struct, user_keywords, primary_words, secondary_words)
 			count -= 1
 		

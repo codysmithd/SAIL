@@ -43,7 +43,7 @@ def run(struct, user_keywords, primary_words, secondary_words):
 	addWord(0)
 
 	if not areValid():
-		print "I'm still thinking..."
+		#print "I'm still thinking..."
 		finished_sentences = []
 		max_rating = 0
 		word_options += secondary_words
