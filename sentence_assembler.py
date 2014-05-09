@@ -42,8 +42,8 @@ def run(struct, user_keywords, primary_words, secondary_words):
 	word_options = removeDuplicates(word_options)
 	addWord(0)
 
-	if len(finished_sentences) == 0:
-		print "Secondary find"
+	if areValid():
+		print "I'm still thinking..."
 		finished_sentences = []
 		max_rating = 0
 		word_options += secondary_words
@@ -52,10 +52,9 @@ def run(struct, user_keywords, primary_words, secondary_words):
 
 
 	#finished_sentences = keywordFilter(finished_sentences, user_keywords)
-
 	print finished_sentences
 
-	if len(finished_sentences) > 0:
+	if areValid():
 		finished_sentences.sort(key=lambda tup: tup[1], reverse=True)
 		return finished_sentences[0][0]
 	else:
@@ -109,3 +108,9 @@ def hasKeyword(sentence, keywords):
 		if token[0] in sentence[0]:
 			return True
 	return False
+
+def areValid():
+	global finished_sentences
+	global structure
+	global max_rating
+	return ((len(finished_sentences) > 0) and ((max_rating >= (len(structure) + 2 - 1)))

@@ -28,8 +28,12 @@ def convertPos(words):
 
 	for index, word in enumerate(words):
 		l = list(word)
-		l[1] = pos_tags.index(l[1])
+		if l[1] in pos_tags:
+			l[1] = pos_tags.index(l[1])
+		else:
+			l[1] = -1
 		t = tuple(l)
 		words[index] = t
 
 	return words
+	
