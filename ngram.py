@@ -11,7 +11,7 @@ def load():
 	global bigram
 	global unigram
 
-	print "Loading bigram database..."
+	print "Loading N-gram databases..."
 
 	f = open("datasets/bigram.json", 'r')
 	bigram = json.load(f)

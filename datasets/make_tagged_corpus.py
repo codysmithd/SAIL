@@ -45,7 +45,7 @@ print "Loading words..."
 
 raw_words = nltk.corpus.brown.words()
 #raw_words += nltk.corpus.nps_chat.words()
-raw_words += nltk.corpus.reuters.words()
+#raw_words += nltk.corpus.reuters.words()
 
 print "Total words: " + str(len(raw_words))
 print "Striping bad words..."
