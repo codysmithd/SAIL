@@ -4,15 +4,21 @@ import json
 
 
 bigram = None
+unigram = None
 
 
 def load():
 	global bigram
+	global unigram
 
 	print "Loading bigram database..."
 
 	f = open("datasets/bigram.json", 'r')
 	bigram = json.load(f)
+	f.close()
+
+	f = open("datasets/unigram.json", 'r')
+	unigram = json.load(f)
 	f.close()
 
 
@@ -45,6 +51,7 @@ def rateSentence(words):
 
 
 def get_bigram_score(word1, word2, word3):
+	global bigram
 	if bigram.has_key(word1):
 		if bigram[word1].has_key(word2):
 			if bigram[word1][word2].has_key(word3):
@@ -52,8 +59,8 @@ def get_bigram_score(word1, word2, word3):
 	return 0
 
 def get_unigram_score(word1, word2):
-	if bigram.has_key(word1):
-		if bigram[word1].has_key(word2):
-			if bigram[word1][word2].has_key(word3):
-				return bigram[word1][word2][word3]
+	global unigram
+	if unigram.has_key(word1):
+		if unigram[word1].has_key(word2):
+				return unigram[word1][word2]
 	return 0

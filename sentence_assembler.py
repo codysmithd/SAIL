@@ -75,11 +75,12 @@ def addWord(i):
 		for index, word in enumerate(word_options):
 			if word != "":
 				if int(word[1]) == structure[i]:
-					sentence[i] = word[0]
-					temp = word
-					word_options[index] = "" # remove from the list
-					addWord(i+1)
-					word_options[index] = temp # add back to the list
+					if ngram.get_unigram_score(prev, word[0]) > 0:
+						sentence[i] = word[0]
+						temp = word
+						word_options[index] = "" # remove from the list
+						addWord(i+1)
+						word_options[index] = temp # add back to the list
 
 
 

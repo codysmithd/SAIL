@@ -112,7 +112,7 @@ while running:
 		if result == "":
 			print "I'm sorry user, I'm afraid I can't respond to that..."
 		else:
-			print result
+			print "\n" + str(result[0]) + "\n"
 
 		# Ask if this result makes sense TODO
 

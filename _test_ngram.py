@@ -5,5 +5,4 @@ ngram.load()
 
 while True:
 	user_input = raw_input("Enter word to test: ")
-	user_input = user_input.split(" ")
-	print ngram.rateSentence(user_input)
+	print ngram.get_unigram_score("<s>", user_input)
