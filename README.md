@@ -8,7 +8,6 @@ It works by attempting to model the human brain with a long-term neural network 
 Dependancies
 ---
 [NLTK](http://www.nltk.org/index.html)
-* brown
 * maxent_treebank_pos_tagger
 
 How to use
