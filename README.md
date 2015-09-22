@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="/assets/SAIL_logo.png" height="200"/>
+</p>
 SAIL
 ====
 
