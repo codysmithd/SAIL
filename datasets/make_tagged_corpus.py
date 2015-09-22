@@ -41,14 +41,14 @@ def discriminate(x):
 			return False
 	return True
 
-print "Loading words..."
+print("Loading words...")
 
 raw_words = nltk.corpus.brown.words()
 #raw_words += nltk.corpus.nps_chat.words()
 #raw_words += nltk.corpus.reuters.words()
 
-print "Total words: " + str(len(raw_words))
-print "Striping bad words..."
+print("Total words: " + str(len(raw_words)))
+print("Striping bad words...")
 
 # ditch stuff
 
@@ -62,7 +62,7 @@ for word in raw_words:
 # convert other punctuation to periods
 words = ["." if word in fullstop else word for word in words]
 
-print "Total words: " + str(len(words))
+print("Total words: " + str(len(words)))
 
 
 
@@ -70,7 +70,7 @@ print "Total words: " + str(len(words))
 split into sentences
 '''
 
-print "Splitting into sentences"
+print("Splitting into sentences")
 
 sentences = []
 current = []
@@ -84,7 +84,7 @@ for word in words:
 		current.append(word.lower())
 
 total_sents = len(sentences)
-print "Sentences: " + str(total_sents)
+print("Sentences: " + str(total_sents))
 
 
 
@@ -92,7 +92,7 @@ print "Sentences: " + str(total_sents)
 Part of speech tagging
 '''
 
-print "Tagging parts of speech..."
+print("Tagging parts of speech...")
 
 parts = []
 counter = 0
@@ -101,7 +101,7 @@ for index, sentence in enumerate(sentences):
 	# because it takes so long
 	counter += 1
 	if counter % 50 == 0:
-		print str(counter) + " of " + str(total_sents)
+		print(str(counter) + " of " + str(total_sents))
 
 	# tag it
 	sentences[index] = nltk.pos_tag(sentence)
@@ -118,7 +118,7 @@ for index, sentence in enumerate(sentences):
 		sentences[index][subIndex] = token
 
 
-print "building JSON..."
+print("building JSON...")
 
 # dump it
 f = open("tagged_corpus.json", 'w')
@@ -129,6 +129,6 @@ f = open("pos_tags.json", 'w')
 json.dump(parts, f)
 f.close()
 
-print "DONE!"
+print("DONE!")
 
-raw_input()
+input()

@@ -6,8 +6,8 @@ f = open("tagged_corpus.json", 'r')
 if(f):
 	sentences = json.load(f)
 else:
-	print "no corpus file"
-	raw_input() # hold for user
+	print("no corpus file")
+	input() # hold for user
 f.close()
 
 
@@ -17,4 +17,4 @@ for sentence in sentences:
                 try:
                         v = word[1]
                 except:
-                        print word
+                        print(word)

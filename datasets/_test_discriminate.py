@@ -39,4 +39,4 @@ def discriminate(x):
 
 
 while True:
-	print discriminate(raw_input("Enter Word to discriminate: "))
+	print(discriminate(input("Enter Word to discriminate: ")))

@@ -10,7 +10,7 @@ class node:
         self.hash_index = self.word + " " + self.pos
 
     # Returns true if node is not null (empty)
-    def __nonzero__(self):
+    def __bool__(self):
         return self.word and self.pos 
 
     # Either adds weight to existing link or makes a new link
@@ -53,7 +53,7 @@ class node:
 
             # 2nd line: "<word>_<part_of_speech> <weight>"
             links = lines[1].split()
-            for x in xrange(0, len(links), 2):
+            for x in range(0, len(links), 2):
                 node = links[x].split('_')
                 self.link(node[0],node[1],int(links[x+1]))
 
@@ -69,7 +69,7 @@ class relational_map:
         f = gzip.open(filename, 'rb')
         if(f):
             lines = f.readlines()
-            for x in xrange(0,len(lines),3):
+            for x in range(0,len(lines),3):
                 new_node = node()
                 new_node.read_in(lines[x] + lines[x+1].rstrip('\n'))
                 self.node_hash[new_node.word + " " + new_node.pos] = new_node
@@ -100,7 +100,7 @@ class relational_map:
                 self.node_hash[word_index] = new_node
 
         # Link every word to every other word
-        for x in xrange(len(words)):
+        for x in range(len(words)):
 
             current_word = words[x]
 

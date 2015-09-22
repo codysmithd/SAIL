@@ -10,12 +10,12 @@ def load():
 	global structures
 	global pos_tags
 
-	print "Loading sentence structures..."
+	print("Loading sentence structures...")
 	f = open("datasets/corpus_structures.json", 'r')
 	structures = json.load(f)
 	f.close()
 
-	print "Loading parts of speech..."
+	print("Loading parts of speech...")
 	f = open("datasets/pos_tags.json", 'r')
 	pos_tags = json.load(f)
 	f.close()

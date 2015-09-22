@@ -29,7 +29,7 @@ class short_term_relational(relational_map):
                 self.node_hash[word_index] = new_node
 
         # Link every word to every other word
-        for x in xrange(len(words)):
+        for x in range(len(words)):
 
             current_word = words[x]
 

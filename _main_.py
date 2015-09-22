@@ -15,18 +15,18 @@ from relational_short_term import short_term_relational
 try:
 	import nltk
 except:
-	print "Please install NLTK, with pyYAML and numpy"
-	raw_input() # wait for user
+	print("Please install NLTK, with pyYAML and numpy")
+	input() # wait for user
 	sys.exit()
 
 try:
 	nltk.pos_tag(["asdf", "asdf"])
 except:
-	print "NLTK requires maxent_treebank_pos_tagger to continue."
-	print "In the python console, run the following:"
-	print ">>> import nltk"
-	print ">>> nltk.download()"
-	raw_input() # wait for user
+	print("NLTK requires maxent_treebank_pos_tagger to continue.")
+	print("In the python console, run the following:")
+	print(">>> import nltk")
+	print(">>> nltk.download()")
+	input() # wait for user
 	sys.exit()
 
 
@@ -34,10 +34,10 @@ except:
 structures.load()
 sentence_assembler.load()
 
-print "Creating short term memory..."
+print("Creating short term memory...")
 short_term = short_term_relational()
 
-print "Loading long term memory..."
+print("Loading long term memory...")
 long_term = relational_map()
 long_term.load_from_file("long_term.txt.gzip")
 
@@ -58,7 +58,7 @@ exit_words = ["done", "exit", "quit", "exit()"]
 remove_chars = [".", "," ,"\"", "\'", "!", "?", ";", "`", "~", "@", "#", "$", "%", "^", "&", "*", "=", "+", "-", "_", "(", ")"]
 
 while running:
-	user_input = raw_input(">>> ").lower()
+	user_input = input(">>> ").lower()
 
 	if user_input in exit_words:
 		running = False
@@ -110,9 +110,9 @@ while running:
 			count -= 1
 		
 		if result == "":
-			print "I'm sorry user, I'm afraid I can't respond to that..."
+			print("I'm sorry user, I'm afraid I can't respond to that...")
 		else:
-			print "\n" + str(result[0]) + "\n"
+			print("\n" + str(result[0]) + "\n")
 
 		# Ask if this result makes sense TODO
 

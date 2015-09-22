@@ -14,15 +14,15 @@ bigram = dict()
 Load corpus
 '''
 
-print "loading JSON corpus..."
+print("loading JSON corpus...")
 
 # load the tagged corpus
 f = open("tagged_corpus.json", 'r')
 if(f):
 	sentences = json.load(f)
 else:
-	print "no corpus file"
-	raw_input() # hold for user
+	print("no corpus file")
+	input() # hold for user
 f.close()
 
 
@@ -31,13 +31,13 @@ f.close()
 def add(word1, word2, word3):
 	global bigram
 
-	if not bigram.has_key(word1):
+	if word1 not in bigram:
 		bigram[word1] = dict()
 
-	if not bigram[word1].has_key(word2):
+	if word2 not in bigram[word1]:
 		bigram[word1][word2] = dict()
 
-	if not bigram[word1][word2].has_key(word3):
+	if word3 not in bigram[word1][word2]:
 		bigram[word1][word2][word3] = 0
 
 	bigram[word1][word2][word3] += 1
@@ -48,7 +48,7 @@ def add(word1, word2, word3):
 Build backward model
 '''
 
-print "building backward model..."
+print("building backward model...")
 
 for sentence in sentences:
 
@@ -85,7 +85,7 @@ for sentence in sentences:
 	word2 = word3
 
 
-print "building JSON..."
+print("building JSON...")
 
 # dump it
 f = open("bigram.json", 'w')
@@ -94,6 +94,6 @@ f.close()
 
 
 
-print "DONE!"
+print("DONE!")
 
-raw_input()
+input()

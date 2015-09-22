@@ -16,18 +16,18 @@ def isLegal(t):
 			return False
 	return True
 
-print "loading JSON corpus"
+print("loading JSON corpus")
 
 f = open("tagged_corpus.json", 'r')
 if(f):
 	sentences = json.load(f)
 else:
-	print "no corpus file"
-	raw_input() # hold for user
+	print("no corpus file")
+	input() # hold for user
 f.close()
 
 
-print "compiling structures"
+print("compiling structures")
 
 struct_dict = {}
 total_sents = len(sentences)
@@ -36,7 +36,7 @@ count = 0
 for sentence in sentences:
 	count += 1
 	if count % 50 == 0:
-		print str(count) + " of " + str(total_sents)
+		print(str(count) + " of " + str(total_sents))
 	
 	l = []
 	for word in sentence:
@@ -47,7 +47,7 @@ for sentence in sentences:
 			# add it if it's not already there
 			t_string = str(t)
 
-			if not struct_dict.has_key(t_string):
+			if t_string not in struct_dict:
 				struct_dict[t_string] = [0, t]
 
 			struct_dict[t_string][0] += 1
@@ -72,18 +72,18 @@ for index, value in enumerate(structures):
 	structures[index] = value[1]
 
 
-print structures
+print(structures)
 
 
-print "building JSON..."
+print("building JSON...")
 
 # dump it
 f = open("corpus_structures.json", 'w')
 json.dump(structures, f)
 f.close()
 
-print str(len(structures))
+print(str(len(structures)))
 
-print "DONE!"
+print("DONE!")
 
-raw_input()
+input()
