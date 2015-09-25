@@ -6,10 +6,7 @@ database = relational_map()
 
 print("Loading in database")
 
-#with open("relational_pickle.data",'wb') as file_pointer:
- #   database = pickle.load(file_pointer)
-
-database.load_from_file("long_term.txt.gzip")
+database.load_from_file("long_term.pickle")
 
 print("database loaded")
 

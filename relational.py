@@ -1,4 +1,4 @@
-import gzip
+import pickle
 
 # Class that contains a Word, Part Of Speech (POS), and of hash table of weighted sums to other words
 class node:
@@ -11,7 +11,7 @@ class node:
 
     # Returns true if node is not null (empty)
     def __bool__(self):
-        return self.word and self.pos 
+        return self.word and self.pos
 
     # Either adds weight to existing link or makes a new link
     def link(self, node_word, node_pos, weight = 1):
@@ -66,26 +66,19 @@ class relational_map:
 
     # Loads in a relational map from text file
     def load_from_file(self, filename):
-        f = gzip.open(filename, 'rb')
-        if(f):
-            lines = f.readlines()
-            for x in range(0,len(lines),3):
-                new_node = node()
-                new_node.read_in(lines[x] + lines[x+1].rstrip('\n'))
-                self.node_hash[new_node.word + " " + new_node.pos] = new_node
-            f.close()
+        with open(filename, 'rb') as f:
+            self.node_hash = pickle.load(f)
+        f.close();
 
     # Outputs the relational map to a file with the given filename as text
     def output_file(self, filename):
-        f = gzip.open(filename, 'wb')
-        if(f):
-            for key in self.node_hash:
-                f.write(self.node_hash[key].print_out())
-            f.close()
+        with open(filename, 'wb') as f:
+            pickle.dump(self.node_hash,f);
+        f.close();
 
     # Links the words. Words is a list of tuples, formatted [(<word>,<part_of_speech>), ... ]
     def link_words(self, words_tuple):
-        
+
         # convert words_tuple in words (where words[n] = "<word> <part_of_speech>")
         words = []
         for word_tuple in words_tuple:

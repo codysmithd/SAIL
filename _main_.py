@@ -16,7 +16,6 @@ try:
 	import nltk
 except:
 	print("Please install NLTK, with pyYAML and numpy")
-	input() # wait for user
 	sys.exit()
 
 try:
@@ -26,7 +25,6 @@ except:
 	print("In the python console, run the following:")
 	print(">>> import nltk")
 	print(">>> nltk.download()")
-	input() # wait for user
 	sys.exit()
 
 
@@ -38,8 +36,13 @@ print("Creating short term memory...")
 short_term = short_term_relational()
 
 print("Loading long term memory...")
-long_term = relational_map()
-long_term.load_from_file("long_term.txt.gzip")
+try:
+	long_term = relational_map()
+	long_term.load_from_file("long_term.pickle")
+except:
+	print("No long-term memory!")
+	print("Please generate it by running _generate_longterm.py")
+	sys.exit()
 
 
 def clearConsole():
@@ -108,7 +111,7 @@ while running:
 			#print "choose structure: " + str(struct)
 			result = sentence_assembler.run(struct, user_keywords, primary_words, secondary_words)
 			count -= 1
-		
+
 		if result == "":
 			print("I'm sorry user, I'm afraid I can't respond to that...")
 		else:
@@ -118,4 +121,3 @@ while running:
 
 
 clearConsole()
-	
