@@ -38,7 +38,7 @@ short_term = short_term_relational()
 print("Loading long term memory...")
 try:
 	long_term = relational_map()
-	long_term.load_from_file("long_term.pickle")
+	long_term.load_from_file("longterm.pickle")
 except:
 	print("No long-term memory!")
 	print("Please generate it by running _generate_longterm.py")
